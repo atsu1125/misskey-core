@@ -42,7 +42,6 @@ export const paramDef = {
 			description: 'The local host is represented with `null`.',
 		},
 		userId: { type: 'string', format: 'misskey:id', nullable: true, default: null },
-		channelId: { type: 'string', format: 'misskey:id', nullable: true, default: null },
 	},
 	required: ['query'],
 } as const;
@@ -57,8 +56,6 @@ export default define(meta, paramDef, async (ps, me) => {
 
 		if (ps.userId) {
 			query.andWhere('note.userId = :userId', { userId: ps.userId });
-		} else if (ps.channelId) {
-			query.andWhere('note.channelId = :channelId', { channelId: ps.channelId });
 		}
 
 		query

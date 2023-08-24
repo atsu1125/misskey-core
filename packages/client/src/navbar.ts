@@ -84,11 +84,6 @@ export const navbarItemDef = reactive({
 		show: computed(() => $i != null),
 		to: '/my/clips',
 	},
-	channels: {
-		title: 'channel',
-		icon: 'fas fa-satellite-dish',
-		to: '/channels',
-	},
 	federation: {
 		title: 'federation',
 		icon: 'fas fa-globe',

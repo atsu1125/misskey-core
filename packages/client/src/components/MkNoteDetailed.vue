@@ -73,7 +73,6 @@
 					<MkUrlPreview v-for="url in urls" :key="url" :url="url" :compact="true" :detail="true" class="url-preview"/>
 					<div v-if="appearNote.renote" class="renote"><XNoteSimple :note="appearNote.renote"/></div>
 				</div>
-				<MkA v-if="appearNote.channel && !inChannel" class="channel" :to="`/channels/${appearNote.channel.id}`"><i class="fas fa-satellite-dish"></i> {{ appearNote.channel.name }}</MkA>
 			</div>
 			<footer class="footer">
 				<div class="info">
@@ -144,8 +143,6 @@ const props = defineProps<{
 	note: misskey.entities.Note;
 	pinned?: boolean;
 }>();
-
-const inChannel = inject('inChannel', null);
 
 let note = $ref(JSON.parse(JSON.stringify(props.note)));
 

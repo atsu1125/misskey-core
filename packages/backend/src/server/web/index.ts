@@ -437,29 +437,6 @@ router.get('/gallery/:post', async (ctx, next) => {
 	await next();
 });
 
-// Channel
-router.get('/channels/:channel', async (ctx, next) => {
-	const channel = await Channels.findOneBy({
-		id: ctx.params.channel,
-	});
-
-	if (channel) {
-		const _channel = await Channels.pack(channel);
-		const meta = await fetchMeta();
-		await ctx.render('channel', {
-			channel: _channel,
-			instanceName: meta.name || 'Misskey',
-			icon: meta.iconUrl,
-			themeColor: meta.themeColor,
-		});
-
-		ctx.set('Cache-Control', 'public, max-age=15');
-
-		return;
-	}
-
-	await next();
-});
 //#endregion
 
 router.get('/_info_card_', async ctx => {

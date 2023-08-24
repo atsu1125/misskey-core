@@ -68,7 +68,6 @@
 						<span>{{ i18n.ts.showLess }}</span>
 					</button>
 				</div>
-				<MkA v-if="appearNote.channel && !inChannel" class="channel" :to="`/channels/${appearNote.channel.id}`"><i class="fas fa-satellite-dish"></i> {{ appearNote.channel.name }}</MkA>
 			</div>
 			<footer class="footer">
 				<XReactionsViewer ref="reactionsViewer" :note="appearNote"/>
@@ -134,8 +133,6 @@ const props = defineProps<{
 	note: misskey.entities.Note;
 	pinned?: boolean;
 }>();
-
-const inChannel = inject('inChannel', null);
 
 let note = $ref(JSON.parse(JSON.stringify(props.note)));
 

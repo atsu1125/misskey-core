@@ -46,7 +46,6 @@ const sounds = ref({
 	notification: ColdDeviceStorage.get('sound_notification'),
 	chat: ColdDeviceStorage.get('sound_chat'),
 	chatBg: ColdDeviceStorage.get('sound_chatBg'),
-	channel: ColdDeviceStorage.get('sound_channel'),
 });
 
 const soundsTypes = [

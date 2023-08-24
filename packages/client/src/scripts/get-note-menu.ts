@@ -53,7 +53,7 @@ export function getNoteMenu(props: {
 				noteId: appearNote.id,
 			});
 
-			os.post({ initialNote: appearNote, renote: appearNote.renote, reply: appearNote.reply, channel: appearNote.channel });
+			os.post({ initialNote: appearNote, renote: appearNote.renote, reply: appearNote.reply });
 		});
 	}
 

@@ -25,15 +25,13 @@ export default class extends Channel {
 	}
 
 	private async onNote(note: Packed<'Note'>) {
-		// チャンネルの投稿ではなく、自分自身の投稿 または
-		// チャンネルの投稿ではなく、その投稿のユーザーをフォローしている または
-		// チャンネルの投稿ではなく、全体公開のローカルの投稿 または
-		// フォローしているチャンネルの投稿 の場合だけ
+		// 自分自身の投稿 または
+		// その投稿のユーザーをフォローしている または
+		// 全体公開のローカルの投稿
 		if (!(
-			(note.channelId == null && this.user!.id === note.userId) ||
-			(note.channelId == null && this.following.has(note.userId)) ||
-			(note.channelId == null && (note.user.host == null && note.visibility === 'public')) ||
-			(note.channelId != null && this.followingChannels.has(note.channelId))
+			(this.user!.id === note.userId) ||
+			(this.following.has(note.userId)) ||
+			(note.user.host == null && note.visibility === 'public')
 		)) return;
 
 		if (['followers', 'specified'].includes(note.visibility)) {

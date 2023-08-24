@@ -21,12 +21,9 @@ export default class extends Channel {
 	}
 
 	private async onNote(note: Packed<'Note'>) {
-		if (note.channelId) {
-			if (!this.followingChannels.has(note.channelId)) return;
-		} else {
-			// その投稿のユーザーをフォローしていなかったら弾く
-			if ((this.user!.id !== note.userId) && !this.following.has(note.userId)) return;
-		}
+		// その投稿のユーザーをフォローしていなかったら弾く
+		if ((this.user!.id !== note.userId) && !this.following.has(note.userId)) return;
+		
 		if (['public', 'home', 'specified'].includes(note.visibility)) return;
 
 		// Ignore notes from instances the user has muted

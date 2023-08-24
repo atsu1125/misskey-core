@@ -47,7 +47,6 @@
 			<nav class="nav">
 				<MkA to="/announcements">{{ $ts.announcements }}</MkA>
 				<MkA to="/explore">{{ $ts.explore }}</MkA>
-				<MkA to="/channels">{{ $ts.channel }}</MkA>
 			</nav>
 		</div>
 	</div>

@@ -15,7 +15,6 @@ import { definePageMetadata } from '@/scripts/page-metadata';
 
 const props = defineProps<{
 	query: string;
-	channel?: string;
 }>();
 
 const pagination = {
@@ -23,7 +22,6 @@ const pagination = {
 	limit: 10,
 	params: computed(() => ({
 		query: props.query,
-		channelId: props.channel,
 	})),
 };
 

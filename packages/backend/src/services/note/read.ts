@@ -45,17 +45,13 @@ export default async function(
 		} else if (note.visibleUserIds && note.visibleUserIds.includes(userId)) {
 			readSpecifiedNotes.push(note);
 		}
-
-		if (note.channelId && followingChannels.has(note.channelId)) {
-			readChannelNotes.push(note);
-		}
 	}
 
-	if ((readMentions.length > 0) || (readSpecifiedNotes.length > 0) || (readChannelNotes.length > 0)) {
+	if ((readMentions.length > 0) || (readSpecifiedNotes.length > 0)) {
 		// Remove the record
 		await NoteUnreads.delete({
 			userId: userId,
-			noteId: In([...readMentions.map(n => n.id), ...readSpecifiedNotes.map(n => n.id), ...readChannelNotes.map(n => n.id)]),
+			noteId: In([...readMentions.map(n => n.id), ...readSpecifiedNotes.map(n => n.id)]),
 		});
 
 		// TODO: ↓まとめてクエリしたい
@@ -77,16 +73,6 @@ export default async function(
 			if (specifiedCount === 0) {
 				// 全て既読になったイベントを発行
 				publishMainStream(userId, 'readAllUnreadSpecifiedNotes');
-			}
-		});
-
-		NoteUnreads.countBy({
-			userId: userId,
-			noteChannelId: Not(IsNull()),
-		}).then(channelNoteCount => {
-			if (channelNoteCount === 0) {
-				// 全て既読になったイベントを発行
-				publishMainStream(userId, 'readAllChannels');
 			}
 		});
 

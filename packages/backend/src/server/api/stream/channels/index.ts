@@ -13,7 +13,6 @@ import messaging from './messaging.js';
 import messagingIndex from './messaging-index.js';
 import drive from './drive.js';
 import hashtag from './hashtag.js';
-import channel from './channel.js';
 import admin from './admin.js';
 
 export default {
@@ -32,6 +31,5 @@ export default {
 	messagingIndex,
 	drive,
 	hashtag,
-	channel,
 	admin,
 };

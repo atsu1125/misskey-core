@@ -79,17 +79,6 @@ async function chooseList(ev: MouseEvent): Promise<void> {
 	os.popupMenu(items, ev.currentTarget ?? ev.target);
 }
 
-async function chooseChannel(ev: MouseEvent): Promise<void> {
-	const channels = await os.api('channels/followed');
-	const items = channels.map(channel => ({
-		type: 'link' as const,
-		text: channel.name,
-		indicate: channel.hasUnreadNote,
-		to: `/channels/${channel.id}`,
-	}));
-	os.popupMenu(items, ev.currentTarget ?? ev.target);
-}
-
 function saveSrc(newSrc: 'home' | 'local' | 'social' | 'global' | 'limited' | 'media' | 'personal'): void {
 	defaultStore.set('tl', {
 		...defaultStore.state.tl,
@@ -143,11 +132,6 @@ const headerTabs = $computed(() => [{
 	title: i18n.ts.lists,
 	iconOnly: true,
 	onClick: chooseList,
-}, {
-	icon: 'fas fa-satellite-dish',
-	title: i18n.ts.channel,
-	iconOnly: true,
-	onClick: chooseChannel,
 }]);
 
 definePageMetadata(computed(() => ({

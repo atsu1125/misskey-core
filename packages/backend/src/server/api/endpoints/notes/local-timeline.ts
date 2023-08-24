@@ -9,7 +9,6 @@ import { makePaginationQuery } from '../../common/make-pagination-query.js';
 import { generateVisibilityQuery } from '../../common/generate-visibility-query.js';
 import { generateRepliesQuery } from '../../common/generate-replies-query.js';
 import { generateMutedNoteQuery } from '../../common/generate-muted-note-query.js';
-import { generateChannelQuery } from '../../common/generate-channel-query.js';
 import { generateBlockedUserQuery } from '../../common/generate-block-query.js';
 
 export const meta = {
@@ -80,7 +79,6 @@ export default define(meta, paramDef, async (ps, user) => {
 		.leftJoinAndSelect('renoteUser.avatar', 'renoteUserAvatar')
 		.leftJoinAndSelect('renoteUser.banner', 'renoteUserBanner');
 
-	generateChannelQuery(query, user);
 	generateRepliesQuery(query, user);
 	generateVisibilityQuery(query, user);
 	if (user) generateMutedUserQuery(query, user);
