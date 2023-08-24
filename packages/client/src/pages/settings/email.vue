@@ -80,7 +80,7 @@ const saveNotificationSettings = () => {
 	});
 };
 
-watch([emailNotification_mention, emailNotification_reply, emailNotification_quote, emailNotification_follow, emailNotification_receiveFollowRequest, emailNotification_groupInvited], () => {
+watch([emailNotification_mention, emailNotification_reply, emailNotification_follow, emailNotification_receiveFollowRequest], () => {
 	saveNotificationSettings();
 });
 
