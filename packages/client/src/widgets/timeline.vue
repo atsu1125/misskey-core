@@ -10,8 +10,7 @@
 			<i v-else-if="widgetProps.src === 'global'" class="fas fa-globe"></i>
 			<i v-else-if="widgetProps.src === 'personal'" class="fas fa-book"></i>
 			<i v-else-if="widgetProps.src === 'list'" class="fas fa-list-ul"></i>
-			<i v-else-if="widgetProps.src === 'antenna'" class="fas fa-satellite"></i>
-			<span style="margin-left: 8px;">{{ widgetProps.src === 'list' ? widgetProps.list.name : widgetProps.src === 'antenna' ? widgetProps.antenna.name : $t('_timelines.' + widgetProps.src) }}</span>
+			<span style="margin-left: 8px;">{{ widgetProps.src === 'list' ? widgetProps.list.name : $t('_timelines.' + widgetProps.src) }}</span>
 			<i :class="menuOpened ? 'fas fa-angle-up' : 'fas fa-angle-down'" style="margin-left: 8px;"></i>
 		</button>
 	</template>
@@ -64,11 +63,6 @@ const widgetPropsDef = {
 		default: 'home',
 		hidden: true,
 	},
-	antenna: {
-		type: 'object' as const,
-		default: null,
-		hidden: true,
-	},
 	list: {
 		type: 'object' as const,
 		default: null,
@@ -99,18 +93,9 @@ const setSrc = (src) => {
 
 const choose = async (ev) => {
 	menuOpened.value = true;
-	const [antennas, lists] = await Promise.all([
-		os.api('antennas/list'),
+	const lists = await (
 		os.api('users/lists/list')
-	]);
-	const antennaItems = antennas.map(antenna => ({
-		text: antenna.name,
-		icon: 'fas fa-satellite',
-		action: () => {
-			widgetProps.antenna = antenna;
-			setSrc('antenna');
-		}
-	}));
+	);
 	const listItems = lists.map(list => ({
 		text: list.name,
 		icon: 'fas fa-list-ul',
@@ -147,7 +132,7 @@ const choose = async (ev) => {
 		text: i18n.ts._timelines.personal,
 		icon: 'fas fa-book',
 		action: () => { setSrc('personal'); }
-	}, antennaItems.length > 0 ? null : undefined, ...antennaItems, listItems.length > 0 ? null : undefined, ...listItems], ev.currentTarget ?? ev.target).then(() => {
+	}, listItems.length > 0 ? null : undefined, ...listItems], ev.currentTarget ?? ev.target).then(() => {
 		menuOpened.value = false;
 	});
 };

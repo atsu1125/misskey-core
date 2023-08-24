@@ -49,14 +49,6 @@ export default async function(
 		if (note.channelId && followingChannels.has(note.channelId)) {
 			readChannelNotes.push(note);
 		}
-
-		if (note.user != null) { // たぶんnullになることは無いはずだけど一応
-			for (const antenna of myAntennas) {
-				if (await checkHitAntenna(antenna, note, note.user, undefined, Array.from(following))) {
-					readAntennaNotes.push(note);
-				}
-			}
-		}
 	}
 
 	if ((readMentions.length > 0) || (readSpecifiedNotes.length > 0) || (readChannelNotes.length > 0)) {
@@ -100,33 +92,6 @@ export default async function(
 
 		readNotificationByQuery(userId, {
 			noteId: In([...readMentions.map(n => n.id), ...readSpecifiedNotes.map(n => n.id)]),
-		});
-	}
-
-	if (readAntennaNotes.length > 0) {
-		await AntennaNotes.update({
-			antennaId: In(myAntennas.map(a => a.id)),
-			noteId: In(readAntennaNotes.map(n => n.id)),
-		}, {
-			read: true,
-		});
-
-		// TODO: まとめてクエリしたい
-		for (const antenna of myAntennas) {
-			const count = await AntennaNotes.countBy({
-				antennaId: antenna.id,
-				read: false,
-			});
-
-			if (count === 0) {
-				publishMainStream(userId, 'readAntenna', antenna);
-			}
-		}
-
-		Users.getHasUnreadAntenna(userId).then(unread => {
-			if (!unread) {
-				publishMainStream(userId, 'readAllAntennas');
-			}
 		});
 	}
 }

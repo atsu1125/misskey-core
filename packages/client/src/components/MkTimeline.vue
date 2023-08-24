@@ -13,7 +13,6 @@ import { $i } from '@/account';
 const props = defineProps<{
 	src: string;
 	list?: string;
-	antenna?: string;
 	channel?: string;
 	sound?: boolean;
 }>();
@@ -56,16 +55,7 @@ let query;
 let connection;
 let connection2;
 
-if (props.src === 'antenna') {
-	endpoint = 'antennas/notes';
-	query = {
-		antennaId: props.antenna,
-	};
-	connection = stream.useChannel('antenna', {
-		antennaId: props.antenna,
-	});
-	connection.on('note', prepend);
-} else if (props.src === 'home') {
+if (props.src === 'home') {
 	endpoint = 'notes/timeline';
 	connection = stream.useChannel('homeTimeline');
 	connection.on('note', prepend);

@@ -449,24 +449,8 @@ export const routes = [{
 	component: page(() => import('./pages/my-clips/index.vue')),
 	loginRequired: true,
 }, {
-	path: '/my/antennas/create',
-	component: page(() => import('./pages/my-antennas/create.vue')),
-	loginRequired: true,
-}, {
-	path: '/my/antennas/:antennaId',
-	component: page(() => import('./pages/my-antennas/edit.vue')),
-	loginRequired: true,
-}, {
-	path: '/my/antennas',
-	component: page(() => import('./pages/my-antennas/index.vue')),
-	loginRequired: true,
-}, {
 	path: '/timeline/list/:listId',
 	component: page(() => import('./pages/user-list-timeline.vue')),
-	loginRequired: true,
-}, {
-	path: '/timeline/antenna/:antennaId',
-	component: page(() => import('./pages/antenna-timeline.vue')),
 	loginRequired: true,
 }, {
 	name: 'index',

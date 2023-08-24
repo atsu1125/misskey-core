@@ -65,12 +65,6 @@ import * as ep___admin_vacuum from './endpoints/admin/vacuum.js';
 import * as ep___admin_deleteAccount from './endpoints/admin/delete-account.js';
 import * as ep___admin_updateUserNote from './endpoints/admin/update-user-note.js';
 import * as ep___announcements from './endpoints/announcements.js';
-import * as ep___antennas_create from './endpoints/antennas/create.js';
-import * as ep___antennas_delete from './endpoints/antennas/delete.js';
-import * as ep___antennas_list from './endpoints/antennas/list.js';
-import * as ep___antennas_notes from './endpoints/antennas/notes.js';
-import * as ep___antennas_show from './endpoints/antennas/show.js';
-import * as ep___antennas_update from './endpoints/antennas/update.js';
 import * as ep___ap_get from './endpoints/ap/get.js';
 import * as ep___ap_show from './endpoints/ap/show.js';
 import * as ep___app_create from './endpoints/app/create.js';
@@ -388,12 +382,6 @@ const eps = [
 	['admin/delete-account', ep___admin_deleteAccount],
 	['admin/update-user-note', ep___admin_updateUserNote],
 	['announcements', ep___announcements],
-	['antennas/create', ep___antennas_create],
-	['antennas/delete', ep___antennas_delete],
-	['antennas/list', ep___antennas_list],
-	['antennas/notes', ep___antennas_notes],
-	['antennas/show', ep___antennas_show],
-	['antennas/update', ep___antennas_update],
 	['ap/get', ep___ap_get],
 	['ap/show', ep___ap_show],
 	['app/create', ep___app_create],

@@ -79,17 +79,6 @@ async function chooseList(ev: MouseEvent): Promise<void> {
 	os.popupMenu(items, ev.currentTarget ?? ev.target);
 }
 
-async function chooseAntenna(ev: MouseEvent): Promise<void> {
-	const antennas = await os.api('antennas/list');
-	const items = antennas.map(antenna => ({
-		type: 'link' as const,
-		text: antenna.name,
-		indicate: antenna.hasUnreadNote,
-		to: `/timeline/antenna/${antenna.id}`,
-	}));
-	os.popupMenu(items, ev.currentTarget ?? ev.target);
-}
-
 async function chooseChannel(ev: MouseEvent): Promise<void> {
 	const channels = await os.api('channels/followed');
 	const items = channels.map(channel => ({
@@ -154,11 +143,6 @@ const headerTabs = $computed(() => [{
 	title: i18n.ts.lists,
 	iconOnly: true,
 	onClick: chooseList,
-}, {
-	icon: 'fas fa-satellite',
-	title: i18n.ts.antennas,
-	iconOnly: true,
-	onClick: chooseAntenna,
 }, {
 	icon: 'fas fa-satellite-dish',
 	title: i18n.ts.channel,

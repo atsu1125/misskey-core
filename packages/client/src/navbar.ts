@@ -62,12 +62,6 @@ export const navbarItemDef = reactive({
 		show: computed(() => $i != null),
 		to: '/my/groups',
 	},
-	antennas: {
-		title: 'antennas',
-		icon: 'fas fa-satellite',
-		show: computed(() => $i != null),
-		to: '/my/antennas',
-	},
 	favorites: {
 		title: 'favorites',
 		icon: 'fas fa-star',
