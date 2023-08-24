@@ -12,12 +12,6 @@ const page = (loader: AsyncComponentLoader<any>) => defineAsyncComponent({
 });
 
 export const routes = [{
-	path: '/@:initUser/pages/:initPageName/view-source',
-	component: page(() => import('./pages/page-editor/page-editor.vue')),
-}, {
-	path: '/@:username/pages/:pageName',
-	component: page(() => import('./pages/page.vue')),
-}, {
 	path: '/@:acct/following',
 	component: page(() => import('./pages/user/following.vue')),
 }, {
@@ -256,17 +250,6 @@ export const routes = [{
 }, {
 	path: '/tags/:tag',
 	component: page(() => import('./pages/tag.vue')),
-}, {
-	path: '/pages/new',
-	component: page(() => import('./pages/page-editor/page-editor.vue')),
-	loginRequired: true,
-}, {
-	path: '/pages/edit/:initPageId',
-	component: page(() => import('./pages/page-editor/page-editor.vue')),
-	loginRequired: true,
-}, {
-	path: '/pages',
-	component: page(() => import('./pages/pages.vue')),
 }, {
 	path: '/registry/keys/system/:path(*)?',
 	component: page(() => import('./pages/registry.keys.vue')),

@@ -344,46 +344,6 @@ router.get('/notes/:note', async (ctx, next) => {
 	await next();
 });
 
-// Page
-router.get('/@:user/pages/:page', async (ctx, next) => {
-	const { username, host } = Acct.parse(ctx.params.user);
-	const user = await Users.findOneBy({
-		usernameLower: username.toLowerCase(),
-		host: host ?? IsNull(),
-	});
-
-	if (user == null) return;
-
-	const page = await Pages.findOneBy({
-		name: ctx.params.page,
-		userId: user.id,
-	});
-
-	if (page) {
-		const _page = await Pages.pack(page);
-		const profile = await UserProfiles.findOneByOrFail({ userId: page.userId });
-		const meta = await fetchMeta();
-		await ctx.render('page', {
-			page: _page,
-			profile,
-			avatarUrl: await Users.getAvatarUrl(await Users.findOneByOrFail({ id: page.userId })),
-			instanceName: meta.name || 'Misskey',
-			icon: meta.iconUrl,
-			themeColor: meta.themeColor,
-		});
-
-		if (['public'].includes(page.visibility)) {
-			ctx.set('Cache-Control', 'public, max-age=15');
-		} else {
-			ctx.set('Cache-Control', 'private, max-age=0, must-revalidate');
-		}
-
-		return;
-	}
-
-	await next();
-});
-
 // Clip
 // TODO: 非publicなclipのハンドリング
 router.get('/clips/:clip', async (ctx, next) => {

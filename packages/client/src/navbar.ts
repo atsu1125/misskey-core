@@ -68,11 +68,6 @@ export const navbarItemDef = reactive({
 		show: computed(() => $i != null),
 		to: '/my/favorites',
 	},
-	pages: {
-		title: 'pages',
-		icon: 'fas fa-file-alt',
-		to: '/pages',
-	},
 	clips: {
 		title: 'clip',
 		icon: 'fas fa-paperclip',
