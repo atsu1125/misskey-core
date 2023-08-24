@@ -7,7 +7,7 @@
 		{{ i18n.ts.makeReactionsPublic }}
 		<template #caption>{{ i18n.ts.makeReactionsPublicDescription }}</template>
 	</FormSwitch>
-		
+
 	<FormSelect v-model="ffVisibility" class="_formBlock" @update:modelValue="save()">
 		<template #label>{{ i18n.ts.ffVisibility }}</template>
 		<option value="public">{{ i18n.ts._ffVisibility.public }}</option>
@@ -15,7 +15,7 @@
 		<option value="private">{{ i18n.ts._ffVisibility.private }}</option>
 		<template #caption>{{ i18n.ts.ffVisibilityDescription }}</template>
 	</FormSelect>
-		
+
 	<FormSwitch v-model="hideOnlineStatus" class="_formBlock" @update:modelValue="save()">
 		{{ i18n.ts.hideOnlineStatus }}
 		<template #caption>{{ i18n.ts.hideOnlineStatusDescription }}</template>
@@ -44,7 +44,6 @@
 				<option value="followers">{{ i18n.ts._visibility.followers }}</option>
 				<option value="specified">{{ i18n.ts._visibility.specified }}</option>
 			</FormSelect>
-			<FormSwitch v-model="defaultNoteLocalOnly" class="_formBlock">{{ i18n.ts._visibility.localOnly }}</FormSwitch>
 		</FormFolder>
 	</FormSection>
 
@@ -73,7 +72,6 @@ let publicReactions = $ref($i.publicReactions);
 let ffVisibility = $ref($i.ffVisibility);
 
 let defaultNoteVisibility = $computed(defaultStore.makeGetterSetter('defaultNoteVisibility'));
-let defaultNoteLocalOnly = $computed(defaultStore.makeGetterSetter('defaultNoteLocalOnly'));
 let rememberNoteVisibility = $computed(defaultStore.makeGetterSetter('rememberNoteVisibility'));
 let keepCw = $computed(defaultStore.makeGetterSetter('keepCw'));
 

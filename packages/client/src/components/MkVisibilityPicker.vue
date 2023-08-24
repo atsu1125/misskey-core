@@ -22,7 +22,7 @@
 				<span>{{ i18n.ts._visibility.followersDescription }}</span>
 			</div>
 		</button>
-		<button key="specified" :disabled="localOnly" class="_button" :class="{ active: v === 'specified' }" data-index="4" @click="choose('specified')">
+		<button key="specified" class="_button" :class="{ active: v === 'specified' }" data-index="4" @click="choose('specified')">
 			<div><i class="fas fa-envelope"></i></div>
 			<div>
 				<span>{{ i18n.ts._visibility.specified }}</span>
@@ -30,14 +30,6 @@
 			</div>
 		</button>
 		<div class="divider"></div>
-		<button key="localOnly" class="_button localOnly" :class="{ active: localOnly }" data-index="5" @click="localOnly = !localOnly">
-			<div><i class="fas fa-biohazard"></i></div>
-			<div>
-				<span>{{ i18n.ts._visibility.localOnly }}</span>
-				<span>{{ i18n.ts._visibility.localOnlyDescription }}</span>
-			</div>
-			<div><i :class="localOnly ? 'fas fa-toggle-on' : 'fas fa-toggle-off'"></i></div>
-		</button>
 	</div>
 </MkModal>
 </template>
@@ -52,23 +44,16 @@ const modal = $ref<InstanceType<typeof MkModal>>();
 
 const props = withDefaults(defineProps<{
 	currentVisibility: typeof misskey.noteVisibilities[number];
-	currentLocalOnly: boolean;
 	src?: HTMLElement;
 }>(), {
 });
 
 const emit = defineEmits<{
 	(ev: 'changeVisibility', v: typeof misskey.noteVisibilities[number]): void;
-	(ev: 'changeLocalOnly', v: boolean): void;
 	(ev: 'closed'): void;
 }>();
 
 let v = $ref(props.currentVisibility);
-let localOnly = $ref(props.currentLocalOnly);
-
-watch($$(localOnly), () => {
-	emit('changeLocalOnly', localOnly);
-});
 
 function choose(visibility: typeof misskey.noteVisibilities[number]): void {
 	v = visibility;

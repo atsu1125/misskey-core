@@ -14,7 +14,6 @@
 		</button>
 		<div class="right">
 			<span class="text-count" :class="{ over: textLength > maxTextLength }">{{ maxTextLength - textLength }}</span>
-			<span v-if="localOnly" class="local-only"><i class="fas fa-biohazard"></i></span>
 			<button ref="visibilityButton" v-tooltip="i18n.ts.visibility" class="_button visibility" @click="setVisibility">
 				<span v-if="visibility === 'public'"><i class="fas fa-globe"></i></span>
 				<span v-if="visibility === 'home'"><i class="fas fa-home"></i></span>
@@ -133,7 +132,6 @@ let poll = $ref<{
 let useCw = $ref(false);
 let showPreview = $ref(false);
 let cw = $ref<string | null>(null);
-let localOnly = $ref<boolean>(props.initialLocalOnly ?? defaultStore.state.rememberNoteVisibility ? defaultStore.state.localOnly : defaultStore.state.defaultNoteLocalOnly);
 let visibility = $ref(props.initialVisibility ?? (defaultStore.state.rememberNoteVisibility ? defaultStore.state.visibility : defaultStore.state.defaultNoteVisibility) as typeof misskey.noteVisibilities[number]);
 let visibleUsers = $ref([]);
 if (props.initialVisibleUsers) {
@@ -280,7 +278,6 @@ function watchForDraft() {
 	watch($$(poll), () => saveDraft());
 	watch($$(files), () => saveDraft(), { deep: true });
 	watch($$(visibility), () => saveDraft());
-	watch($$(localOnly), () => saveDraft());
 }
 
 function checkMissingMention() {
@@ -366,19 +363,12 @@ function upload(file: File, name?: string) {
 function setVisibility() {
 	os.popup(defineAsyncComponent(() => import('@/components/MkVisibilityPicker.vue')), {
 		currentVisibility: visibility,
-		currentLocalOnly: localOnly,
 		src: visibilityButton,
 	}, {
 		changeVisibility: v => {
 			visibility = v;
 			if (defaultStore.state.rememberNoteVisibility) {
 				defaultStore.set('visibility', visibility);
-			}
-		},
-		changeLocalOnly: v => {
-			localOnly = v;
-			if (defaultStore.state.rememberNoteVisibility) {
-				defaultStore.set('localOnly', localOnly);
 			}
 		},
 	}, 'closed');
@@ -514,7 +504,6 @@ function saveDraft() {
 			useCw: useCw,
 			cw: cw,
 			visibility: visibility,
-			localOnly: localOnly,
 			files: files,
 			poll: poll,
 		},
@@ -539,7 +528,6 @@ async function post() {
 		renoteId: props.renote ? props.renote.id : quoteId ? quoteId : undefined,
 		poll: poll,
 		cw: useCw ? cw || '' : undefined,
-		localOnly: localOnly,
 		visibility: visibility,
 		visibleUserIds: visibility === 'specified' ? visibleUsers.map(u => u.id) : undefined,
 	};
@@ -653,7 +641,6 @@ onMounted(() => {
 				useCw = draft.data.useCw;
 				cw = draft.data.cw;
 				visibility = draft.data.visibility;
-				localOnly = draft.data.localOnly;
 				files = (draft.data.files || []).filter(draftFile => draftFile);
 				if (draft.data.poll) {
 					poll = draft.data.poll;
@@ -677,7 +664,6 @@ onMounted(() => {
 				};
 			}
 			visibility = init.visibility;
-			localOnly = init.localOnly;
 			quoteId = init.renote ? init.renote.id : null;
 		}
 

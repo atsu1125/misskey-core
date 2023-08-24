@@ -55,7 +55,6 @@ const renote = (viaKeyboard = false) => {
 	pleaseLogin();
 
 	const visibility = defaultStore.state.rememberNoteVisibility ? defaultStore.state.visibility : defaultStore.state.defaultNoteVisibility;
-	const localOnly = defaultStore.state.rememberNoteVisibility ? defaultStore.state.localOnly : defaultStore.state.defaultNoteLocalOnly;
 
 	os.popupMenu([{
 		text: i18n.ts.renote,
@@ -64,7 +63,6 @@ const renote = (viaKeyboard = false) => {
 			os.api('notes/create', {
 				renoteId: props.note.id,
 				visibility: visibility as never,
-				localOnly,
 			});
 		},
 	}], buttonRef.value, {

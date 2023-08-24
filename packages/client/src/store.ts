@@ -83,10 +83,6 @@ export const defaultStore = markRaw(new Storage('base', {
 		where: 'deviceAccount',
 		default: 'public' as 'public' | 'home' | 'followers' | 'specified',
 	},
-	localOnly: {
-		where: 'deviceAccount',
-		default: false,
-	},
 	statusbars: {
 		where: 'deviceAccount',
 		default: [] as {

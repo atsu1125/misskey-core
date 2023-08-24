@@ -117,7 +117,6 @@ type Option = {
 	renote?: Note | null;
 	files?: DriveFile[] | null;
 	poll?: IPoll | null;
-	localOnly?: boolean | null;
 	cw?: string | null;
 	visibility?: string;
 	visibleUsers?: MinimumUser[] | null;
@@ -132,7 +131,6 @@ type Option = {
 export default async (user: { id: User['id']; username: User['username']; host: User['host']; isSilenced: User['isSilenced']; createdAt: User['createdAt']; }, data: Option, silent = false) => new Promise<Note>(async (res, rej) => {
 	if (data.createdAt == null) data.createdAt = new Date();
 	if (data.visibility == null) data.visibility = 'public';
-	if (data.localOnly == null) data.localOnly = false;
 
 	// サイレンス
 	if (user.isSilenced && data.visibility === 'public') {
@@ -157,16 +155,6 @@ export default async (user: { id: User['id']; username: User['username']; host: 
 	// 返信対象がpublicではないならhomeにする
 	if (data.reply && data.reply.visibility !== 'public' && data.visibility === 'public') {
 		data.visibility = 'home';
-	}
-
-	// ローカルのみをRenoteしたらローカルのみにする
-	if (data.renote && data.renote.localOnly) {
-		data.localOnly = true;
-	}
-
-	// ローカルのみにリプライしたらローカルのみにする
-	if (data.reply && data.reply.localOnly) {
-		data.localOnly = true;
 	}
 
 	if (data.text) {
@@ -432,8 +420,6 @@ export default async (user: { id: User['id']; username: User['username']; host: 
 });
 
 async function renderNoteOrRenoteActivity(data: Option, note: Note) {
-	if (data.localOnly) return null;
-
 	const content = data.renote && data.text == null && data.poll == null && (data.files == null || data.files.length === 0)
 		? renderAnnounce(data.renote.uri ? data.renote.uri : `${config.url}/notes/${data.renote.id}`, note)
 		: renderCreate(await renderNote(note, false), note);
@@ -471,7 +457,7 @@ async function insertNote(user: { id: User['id']; host: User['host']; }, data: O
 		tags: tags.map(tag => normalizeForSearch(tag)),
 		emojis,
 		userId: user.id,
-		localOnly: data.localOnly!,
+		localOnly: false,
 		visibility: data.visibility as any,
 		visibleUserIds: data.visibility === 'specified'
 			? data.visibleUsers
