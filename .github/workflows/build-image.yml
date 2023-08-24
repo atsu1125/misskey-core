@@ -21,7 +21,7 @@ jobs:
       - uses: docker/metadata-action@v3
         id: meta
         with:
-          images: ghcr.io/${{ github.repository_owner }}/misskey-v12
+          images: ghcr.io/${{ github.repository_owner }}/misskey-core
           flavor: |
             latest=true
           tags: |

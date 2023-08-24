@@ -3,7 +3,7 @@ version: "3"
 services:
   web:
     #build: .
-    image: ghcr.io/atsu1125/misskey-v12
+    image: ghcr.io/atsu1125/misskey-core
     restart: always
     links:
       - db
