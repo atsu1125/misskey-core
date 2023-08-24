@@ -17,16 +17,7 @@ export default async function(actor: CacheableRemoteUser, uri: string): Promise<
 		const note = await dbResolver.getNoteFromApId(uri);
 
 		if (note == null) {
-			const message = await dbResolver.getMessageFromApId(uri);
-			if (message == null) return 'message not found';
-
-			if (message.userId !== actor.id) {
-				return '投稿を削除しようとしているユーザーは投稿の作成者ではありません';
-			}
-
-			await deleteMessage(message);
-
-			return 'ok: message deleted';
+			return 'message not found';
 		}
 
 		if (note.userId !== actor.id) {

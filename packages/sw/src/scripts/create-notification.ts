@@ -209,23 +209,6 @@ async function composeNotification<K extends keyof pushNotificationDataMap>(data
 						data,
 					}];
 
-				case 'groupInvited':
-					return [t('_notification.youWereInvitedToGroup', { userName: getUserName(data.body.user) }), {
-						body: data.body.invitation.group.name,
-						badge: iconUrl('id-card-alt'),
-						data,
-						actions: [
-							{
-								action: 'accept',
-								title: t('accept')
-							},
-							{
-								action: 'reject',
-								title: t('reject')
-							}
-						],
-					}];
-
 				case 'app':
 						return [data.body.header || data.body.body, {
 							body: data.body.header && data.body.body,
@@ -236,23 +219,6 @@ async function composeNotification<K extends keyof pushNotificationDataMap>(data
 				default:
 					return null;
 			}
-		case 'unreadMessagingMessage':
-			if (data.body.groupId === null) {
-				return [t('_notification.youGotMessagingMessageFromUser', { name: getUserName(data.body.user) }), {
-					icon: data.body.user.avatarUrl,
-					badge: iconUrl('comments'),
-					tag: `messaging:user:${data.body.userId}`,
-					data,
-					renotify: true,
-				}];
-			}
-			return [t('_notification.youGotMessagingMessageFromGroup', { name: data.body.group.name }), {
-				icon: data.body.user.avatarUrl,
-				badge: iconUrl('comments'),
-				tag: `messaging:group:${data.body.groupId}`,
-				data,
-				renotify: true,
-			}];
 		default:
 			return null;
 	}
@@ -263,7 +229,7 @@ export async function createEmptyNotification() {
 		if (!swLang.i18n) swLang.fetchLocale();
 		const i18n = await swLang.i18n as I18n<any>;
 		const { t } = i18n;
-	
+
 		await self.registration.showNotification(
 			t('_notification.emptyPushNotificationMessage'),
 			{

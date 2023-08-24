@@ -4,7 +4,6 @@
 	<FormSection>
 		<FormLink class="_formBlock" @click="readAllNotifications">{{ i18n.ts.markAsReadAllNotifications }}</FormLink>
 		<FormLink class="_formBlock" @click="readAllUnreadNotes">{{ i18n.ts.markAsReadAllUnreadNotes }}</FormLink>
-		<FormLink class="_formBlock" @click="readAllMessagingMessages">{{ i18n.ts.markAsReadAllTalkMessages }}</FormLink>
 	</FormSection>
 </div>
 </template>
@@ -22,10 +21,6 @@ import { definePageMetadata } from '@/scripts/page-metadata';
 
 async function readAllUnreadNotes() {
 	await os.api('i/read-all-unread-notes');
-}
-
-async function readAllMessagingMessages() {
-	await os.api('i/read-all-messaging-messages');
 }
 
 async function readAllNotifications() {

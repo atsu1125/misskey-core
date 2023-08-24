@@ -9,8 +9,6 @@ import personalTimeline from './personal-timeline.js';
 import serverStats from './server-stats.js';
 import queueStats from './queue-stats.js';
 import userList from './user-list.js';
-import messaging from './messaging.js';
-import messagingIndex from './messaging-index.js';
 import drive from './drive.js';
 import hashtag from './hashtag.js';
 import admin from './admin.js';
@@ -27,8 +25,6 @@ export default {
 	serverStats,
 	queueStats,
 	userList,
-	messaging,
-	messagingIndex,
 	drive,
 	hashtag,
 	admin,

@@ -44,8 +44,6 @@ const sounds = ref({
 	note: ColdDeviceStorage.get('sound_note'),
 	noteMy: ColdDeviceStorage.get('sound_noteMy'),
 	notification: ColdDeviceStorage.get('sound_notification'),
-	chat: ColdDeviceStorage.get('sound_chat'),
-	chatBg: ColdDeviceStorage.get('sound_chatBg'),
 });
 
 const soundsTypes = [

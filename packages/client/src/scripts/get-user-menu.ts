@@ -38,28 +38,6 @@ export function getUserMenu(user, router: Router = mainRouter) {
 		});
 	}
 
-	async function inviteGroup() {
-		const groups = await os.api('users/groups/owned');
-		if (groups.length === 0) {
-			os.alert({
-				type: 'error',
-				text: i18n.ts.youHaveNoGroups,
-			});
-			return;
-		}
-		const { canceled, result: groupId } = await os.select({
-			title: i18n.ts.group,
-			items: groups.map(group => ({
-				value: group.id, text: group.name,
-			})),
-		});
-		if (canceled) return;
-		os.apiWithDialog('users/groups/invite', {
-			groupId: groupId,
-			userId: user.id,
-		});
-	}
-
 	async function toggleMute() {
 		if (user.isMuted) {
 			os.apiWithDialog('mute/delete', {
@@ -175,20 +153,11 @@ export function getUserMenu(user, router: Router = mainRouter) {
 		action: () => {
 			os.post({ specified: user });
 		},
-	}, meId !== user.id ? {
-		type: 'link',
-		icon: 'fas fa-comments',
-		text: i18n.ts.startMessaging,
-		to: '/my/messaging/' + Acct.toString(user),
-	} : undefined, null, {
+	}, {
 		icon: 'fas fa-list-ul',
 		text: i18n.ts.addToList,
 		action: pushList,
-	}, meId !== user.id ? {
-		icon: 'fas fa-users',
-		text: i18n.ts.inviteToGroup,
-		action: inviteGroup,
-	} : undefined] as any;
+	}] as any;
 
 	if ($i && meId !== user.id) {
 		menu = menu.concat([null, {

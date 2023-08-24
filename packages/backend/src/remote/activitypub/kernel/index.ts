@@ -3,7 +3,6 @@ import { CacheableRemoteUser } from '@/models/entities/user.js';
 import create from './create/index.js';
 import performDeleteActivity from './delete/index.js';
 import performUpdateActivity from './update/index.js';
-import { performReadActivity } from './read.js';
 import follow from './follow.js';
 import undo from './undo/index.js';
 import like from './like.js';
@@ -46,8 +45,6 @@ async function performOneActivity(actor: CacheableRemoteUser, activity: IObject)
 		await performDeleteActivity(actor, activity);
 	} else if (isUpdate(activity)) {
 		await performUpdateActivity(actor, activity);
-	} else if (isRead(activity)) {
-		await performReadActivity(actor, activity);
 	} else if (isFollow(activity)) {
 		await follow(actor, activity);
 	} else if (isAccept(activity)) {

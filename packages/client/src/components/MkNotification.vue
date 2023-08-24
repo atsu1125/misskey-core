@@ -8,7 +8,6 @@
 			<i v-if="notification.type === 'follow'" class="fas fa-plus"></i>
 			<i v-else-if="notification.type === 'receiveFollowRequest'" class="fas fa-clock"></i>
 			<i v-else-if="notification.type === 'followRequestAccepted'" class="fas fa-check"></i>
-			<i v-else-if="notification.type === 'groupInvited'" class="fas fa-id-card-alt"></i>
 			<i v-else-if="notification.type === 'renote'" class="fas fa-retweet"></i>
 			<i v-else-if="notification.type === 'reply'" class="fas fa-reply"></i>
 			<i v-else-if="notification.type === 'mention'" class="fas fa-at"></i>

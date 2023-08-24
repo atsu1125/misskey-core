@@ -14,13 +14,6 @@ export const navbarItemDef = reactive({
 		indicated: computed(() => $i != null && $i.hasUnreadNotification),
 		to: '/my/notifications',
 	},
-	messaging: {
-		title: 'messaging',
-		icon: 'fas fa-comments',
-		show: computed(() => $i != null),
-		indicated: computed(() => $i != null && $i.hasUnreadMessagingMessage),
-		to: '/my/messaging',
-	},
 	drive: {
 		title: 'drive',
 		icon: 'fas fa-cloud',
@@ -56,14 +49,6 @@ export const navbarItemDef = reactive({
 		show: computed(() => $i != null),
 		to: '/my/lists',
 	},
-	/*
-	groups: {
-		title: 'groups',
-		icon: 'fas fa-users',
-		show: computed(() => $i != null),
-		to: '/my/groups',
-	},
-	*/
 	favorites: {
 		title: 'favorites',
 		icon: 'fas fa-star',

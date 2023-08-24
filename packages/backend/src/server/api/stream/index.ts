@@ -140,12 +140,6 @@ export default class Connection {
 			case 'disconnect': this.onChannelDisconnectRequested(body); break;
 			case 'channel': this.onChannelMessageRequested(body); break;
 			case 'ch': this.onChannelMessageRequested(body); break; // alias
-
-			// 個々のチャンネルではなくルートレベルでこれらのメッセージを受け取る理由は、
-			// クライアントの事情を考慮したとき、入力フォームはノートチャンネルやメッセージのメインコンポーネントとは別
-			// なこともあるため、それらのコンポーネントがそれぞれ各チャンネルに接続するようにするのは面倒なため。
-			case 'typingOnChannel': this.typingOnChannel(body.channel); break;
-			case 'typingOnMessaging': this.typingOnMessaging(body); break;
 		}
 	}
 
@@ -300,22 +294,6 @@ export default class Connection {
 		const channel = this.channels.find(c => c.id === data.id);
 		if (channel != null && channel.onMessage != null) {
 			channel.onMessage(data.type, data.body);
-		}
-	}
-
-	private typingOnChannel(channel: ChannelModel['id']) {
-		if (this.user) {
-			publishChannelStream(channel, 'typing', this.user.id);
-		}
-	}
-
-	private typingOnMessaging(param: { partner?: User['id']; group?: UserGroup['id']; }) {
-		if (this.user) {
-			if (param.partner) {
-				publishMessagingStream(param.partner, this.user.id, 'typing', this.user.id);
-			} else if (param.group) {
-				publishGroupMessagingStream(param.group, 'typing', this.user.id);
-			}
 		}
 	}
 

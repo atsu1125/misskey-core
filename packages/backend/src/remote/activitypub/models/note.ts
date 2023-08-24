@@ -109,8 +109,6 @@ export async function createNote(value: string | IObject, resolver?: Resolver, s
 		}
 	}
 
-	let isTalk = note._misskey_talk && visibility === 'specified';
-
 	const apMentions = await extractApMentions(note.tag, resolver);
 	const apHashtags = await extractApHashtags(note.tag);
 
@@ -137,17 +135,6 @@ export async function createNote(value: string | IObject, resolver?: Resolver, s
 				return x;
 			}
 		}).catch(async e => {
-			// トークだったらinReplyToのエラーは無視
-			const uri = getApId(note.inReplyTo);
-			if (uri.startsWith(config.url + '/')) {
-				const id = uri.split('/').pop();
-				const talk = await MessagingMessages.findOneBy({ id });
-				if (talk) {
-					isTalk = true;
-					return null;
-				}
-			}
-
 			logger.warn(`Error in inReplyTo ${note.inReplyTo} - ${e.statusCode || e}`);
 			throw e;
 		})
@@ -236,13 +223,6 @@ export async function createNote(value: string | IObject, resolver?: Resolver, s
 	const apEmojis = emojis.map(emoji => emoji.name);
 
 	const poll = await extractPollFromQuestion(note, resolver).catch(() => undefined);
-
-	if (isTalk) {
-		for (const recipient of visibleUsers) {
-			await createMessage(actor, recipient, undefined, text || undefined, (files && files.length > 0) ? files[0] : null, object.id);
-			return null;
-		}
-	}
 
 	return await post(actor, {
 		createdAt: note.published ? new Date(note.published) : null,

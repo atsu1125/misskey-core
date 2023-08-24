@@ -126,10 +126,6 @@ export default async function renderNote(note: Note, dive = true, isTalk = false
 		})),
 	} : {};
 
-	const asTalk = isTalk ? {
-		_misskey_talk: true,
-	} : {};
-
 	return {
 		id: `${config.url}/notes/${note.id}`,
 		type: 'Note',
@@ -151,7 +147,6 @@ export default async function renderNote(note: Note, dive = true, isTalk = false
 		sensitive: note.cw != null || files.some(file => file.isSensitive),
 		tag,
 		...asPoll,
-		...asTalk,
 	};
 }
 
