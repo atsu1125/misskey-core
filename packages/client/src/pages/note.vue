@@ -15,16 +15,6 @@
 							<MkRemoteCaution v-if="note.user.host != null" :href="note.url ?? note.uri"/>
 							<XNoteDetailed :key="note.id" v-model:note="note" class="note"/>
 						</div>
-						<div v-if="clips && clips.length > 0" class="_content clips _gap">
-							<div class="title">{{ i18n.ts.clip }}</div>
-							<MkA v-for="item in clips" :key="item.id" :to="`/clips/${item.id}`" class="item _panel _gap">
-								<b>{{ item.name }}</b>
-								<div v-if="item.description" class="description">{{ item.description }}</div>
-								<div class="user">
-									<MkAvatar :user="item.user" class="avatar" :show-indicator="true"/> <MkUserName :user="item.user" :nowrap="false"/>
-								</div>
-							</MkA>
-						</div>
 						<MkButton v-if="!showPrev && hasPrev" class="load prev" @click="showPrev = true"><i class="fas fa-chevron-down"></i></MkButton>
 					</div>
 
@@ -57,7 +47,6 @@ const props = defineProps<{
 }>();
 
 let note = $ref<null | misskey.entities.Note>();
-let clips = $ref();
 let hasPrev = $ref(false);
 let hasNext = $ref(false);
 let showPrev = $ref(false);
@@ -94,9 +83,6 @@ function fetchNote() {
 	}).then(res => {
 		note = res;
 		Promise.all([
-			os.api('notes/clips', {
-				noteId: note.id,
-			}),
 			os.api('users/notes', {
 				userId: note.userId,
 				untilId: note.id,
@@ -107,8 +93,7 @@ function fetchNote() {
 				sinceId: note.id,
 				limit: 1,
 			}),
-		]).then(([_clips, prev, next]) => {
-			clips = _clips;
+		]).then(([prev, next]) => {
 			hasPrev = prev.length !== 0;
 			hasNext = next.length !== 0;
 		});

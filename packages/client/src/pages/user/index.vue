@@ -6,7 +6,6 @@
 			<div v-if="user">
 				<XHome v-if="tab === 'home'" :user="user"/>
 				<XReactions v-else-if="tab === 'reactions'" :user="user"/>
-				<XClips v-else-if="tab === 'clips'" :user="user"/>
 			</div>
 			<MkError v-else-if="error" @retry="fetchUser()"/>
 			<MkLoading v-else/>
@@ -31,7 +30,6 @@ import { $i } from '@/account';
 
 const XHome = defineAsyncComponent(() => import('./home.vue'));
 const XReactions = defineAsyncComponent(() => import('./reactions.vue'));
-const XClips = defineAsyncComponent(() => import('./clips.vue'));
 
 const props = withDefaults(defineProps<{
 	acct: string;
@@ -70,11 +68,8 @@ const headerTabs = $computed(() => user ? [{
 	key: 'reactions',
 	title: i18n.ts.reaction,
 	icon: 'fas fa-laugh',
-}] : [], {
-	key: 'clips',
-	title: i18n.ts.clips,
-	icon: 'fas fa-paperclip',
-}] : null);
+}] : []
+] : null);
 
 definePageMetadata(computed(() => user ? {
 	icon: 'fas fa-user',

@@ -68,12 +68,6 @@ export const navbarItemDef = reactive({
 		show: computed(() => $i != null),
 		to: '/my/favorites',
 	},
-	clips: {
-		title: 'clip',
-		icon: 'fas fa-paperclip',
-		show: computed(() => $i != null),
-		to: '/my/clips',
-	},
 	federation: {
 		title: 'federation',
 		icon: 'fas fa-globe',

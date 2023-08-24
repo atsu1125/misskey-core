@@ -344,34 +344,6 @@ router.get('/notes/:note', async (ctx, next) => {
 	await next();
 });
 
-// Clip
-// TODO: 非publicなclipのハンドリング
-router.get('/clips/:clip', async (ctx, next) => {
-	const clip = await Clips.findOneBy({
-		id: ctx.params.clip,
-	});
-
-	if (clip) {
-		const _clip = await Clips.pack(clip);
-		const profile = await UserProfiles.findOneByOrFail({ userId: clip.userId });
-		const meta = await fetchMeta();
-		await ctx.render('clip', {
-			clip: _clip,
-			profile,
-			avatarUrl: await Users.getAvatarUrl(await Users.findOneByOrFail({ id: clip.userId })),
-			instanceName: meta.name || 'Misskey',
-			icon: meta.iconUrl,
-			themeColor: meta.themeColor,
-		});
-
-		ctx.set('Cache-Control', 'public, max-age=15');
-
-		return;
-	}
-
-	await next();
-});
-
 //#endregion
 
 router.get('/_info_card_', async ctx => {

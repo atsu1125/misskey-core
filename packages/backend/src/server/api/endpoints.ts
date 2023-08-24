@@ -88,14 +88,6 @@ import * as ep___charts_user_following from './endpoints/charts/user/following.j
 import * as ep___charts_user_notes from './endpoints/charts/user/notes.js';
 import * as ep___charts_user_reactions from './endpoints/charts/user/reactions.js';
 import * as ep___charts_users from './endpoints/charts/users.js';
-import * as ep___clips_addNote from './endpoints/clips/add-note.js';
-import * as ep___clips_removeNote from './endpoints/clips/remove-note.js';
-import * as ep___clips_create from './endpoints/clips/create.js';
-import * as ep___clips_delete from './endpoints/clips/delete.js';
-import * as ep___clips_list from './endpoints/clips/list.js';
-import * as ep___clips_notes from './endpoints/clips/notes.js';
-import * as ep___clips_show from './endpoints/clips/show.js';
-import * as ep___clips_update from './endpoints/clips/update.js';
 import * as ep___drive from './endpoints/drive.js';
 import * as ep___drive_files from './endpoints/drive/files.js';
 import * as ep___drive_files_attachedNotes from './endpoints/drive/files/attached-notes.js';
@@ -199,7 +191,6 @@ import * as ep___mute_list from './endpoints/mute/list.js';
 import * as ep___my_apps from './endpoints/my/apps.js';
 import * as ep___notes from './endpoints/notes.js';
 import * as ep___notes_children from './endpoints/notes/children.js';
-import * as ep___notes_clips from './endpoints/notes/clips.js';
 import * as ep___notes_conversation from './endpoints/notes/conversation.js';
 import * as ep___notes_create from './endpoints/notes/create.js';
 import * as ep___notes_delete from './endpoints/notes/delete.js';
@@ -248,7 +239,6 @@ import * as ep___sw_unregister from './endpoints/sw/unregister.js';
 import * as ep___test from './endpoints/test.js';
 import * as ep___username_available from './endpoints/username/available.js';
 import * as ep___users from './endpoints/users.js';
-import * as ep___users_clips from './endpoints/users/clips.js';
 import * as ep___users_followers from './endpoints/users/followers.js';
 import * as ep___users_following from './endpoints/users/following.js';
 import * as ep___users_getFrequentlyRepliedUsers from './endpoints/users/get-frequently-replied-users.js';
@@ -372,14 +362,6 @@ const eps = [
 	['charts/user/notes', ep___charts_user_notes],
 	['charts/user/reactions', ep___charts_user_reactions],
 	['charts/users', ep___charts_users],
-	['clips/add-note', ep___clips_addNote],
-	['clips/remove-note', ep___clips_removeNote],
-	['clips/create', ep___clips_create],
-	['clips/delete', ep___clips_delete],
-	['clips/list', ep___clips_list],
-	['clips/notes', ep___clips_notes],
-	['clips/show', ep___clips_show],
-	['clips/update', ep___clips_update],
 	['drive', ep___drive],
 	['drive/files', ep___drive_files],
 	['drive/files/attached-notes', ep___drive_files_attachedNotes],
@@ -483,7 +465,6 @@ const eps = [
 	['my/apps', ep___my_apps],
 	['notes', ep___notes],
 	['notes/children', ep___notes_children],
-	['notes/clips', ep___notes_clips],
 	['notes/conversation', ep___notes_conversation],
 	['notes/create', ep___notes_create],
 	['notes/delete', ep___notes_delete],
@@ -532,7 +513,6 @@ const eps = [
 	['test', ep___test],
 	['username/available', ep___username_available],
 	['users', ep___users],
-	['users/clips', ep___users_clips],
 	['users/followers', ep___users_followers],
 	['users/following', ep___users_following],
 	['users/get-frequently-replied-users', ep___users_getFrequentlyRepliedUsers],

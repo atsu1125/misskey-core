@@ -26,9 +26,6 @@ export const routes = [{
 	path: '/notes/:noteId',
 	component: page(() => import('./pages/note.vue')),
 }, {
-	path: '/clips/:clipId',
-	component: page(() => import('./pages/clip.vue')),
-}, {
 	path: '/user-info/:userId',
 	component: page(() => import('./pages/user-info.vue')),
 }, {
@@ -397,10 +394,6 @@ export const routes = [{
 }, {
 	path: '/my/lists',
 	component: page(() => import('./pages/my-lists/index.vue')),
-	loginRequired: true,
-}, {
-	path: '/my/clips',
-	component: page(() => import('./pages/my-clips/index.vue')),
 	loginRequired: true,
 }, {
 	path: '/timeline/list/:listId',
