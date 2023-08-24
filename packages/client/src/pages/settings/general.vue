@@ -39,8 +39,6 @@
 
 	<FormSection>
 		<template #label>{{ i18n.ts.appearance }}</template>
-		<FormSwitch v-model="disableAnimatedMfm" class="_formBlock">{{ i18n.ts.disableAnimatedMfm }}</FormSwitch>
-		<FormSwitch v-model="enableMfm" class="_formBlock">{{ i18n.ts.enableMfm }}</FormSwitch>
 		<FormSwitch v-model="reduceAnimation" class="_formBlock">{{ i18n.ts.reduceUiAnimation }}</FormSwitch>
 		<FormSwitch v-model="useBlurEffect" class="_formBlock">{{ i18n.ts.useBlurEffect }}</FormSwitch>
 		<FormSwitch v-model="useBlurEffectForModal" class="_formBlock">{{ i18n.ts.useBlurEffectForModal }}</FormSwitch>
@@ -133,7 +131,6 @@ const reduceAnimation = computed(defaultStore.makeGetterSetter('animation', v =>
 const useBlurEffectForModal = computed(defaultStore.makeGetterSetter('useBlurEffectForModal'));
 const useBlurEffect = computed(defaultStore.makeGetterSetter('useBlurEffect'));
 const showGapBetweenNotesInTimeline = computed(defaultStore.makeGetterSetter('showGapBetweenNotesInTimeline'));
-const disableAnimatedMfm = computed(defaultStore.makeGetterSetter('animatedMfm', v => !v, v => !v));
 const useOsNativeEmojis = computed(defaultStore.makeGetterSetter('useOsNativeEmojis'));
 const disableDrawer = computed(defaultStore.makeGetterSetter('disableDrawer'));
 const disableShowingAnimatedImages = computed(defaultStore.makeGetterSetter('disableShowingAnimatedImages'));
@@ -148,7 +145,6 @@ const enableInfiniteScroll = computed(defaultStore.makeGetterSetter('enableInfin
 const useReactionPickerForContextMenu = computed(defaultStore.makeGetterSetter('useReactionPickerForContextMenu'));
 const squareAvatars = computed(defaultStore.makeGetterSetter('squareAvatars'));
 const aiChanMode = computed(defaultStore.makeGetterSetter('aiChanMode'));
-const enableMfm = computed(defaultStore.makeGetterSetter('enableMfm'));
 const enableBotLoggedinWarning = computed(defaultStore.makeGetterSetter('enableBotLoggedinWarning'));
 const enableAdminLoggedinWarning = computed(defaultStore.makeGetterSetter('enableAdminLoggedinWarning'));
 
