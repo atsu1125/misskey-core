@@ -88,7 +88,7 @@ redis:
 # ONCE YOU HAVE STARTED THE INSTANCE, DO NOT CHANGE THE
 # ID SETTINGS AFTER THAT!
 
-id: 'aid'
+id: 'uuid'
 
 #   ┌─────────────────────┐
 #───┘ Other configuration └─────────────────────────────────────
