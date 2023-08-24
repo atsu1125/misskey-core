@@ -412,31 +412,6 @@ router.get('/clips/:clip', async (ctx, next) => {
 	await next();
 });
 
-// Gallery post
-router.get('/gallery/:post', async (ctx, next) => {
-	const post = await GalleryPosts.findOneBy({ id: ctx.params.post });
-
-	if (post) {
-		const _post = await GalleryPosts.pack(post);
-		const profile = await UserProfiles.findOneByOrFail({ userId: post.userId });
-		const meta = await fetchMeta();
-		await ctx.render('gallery-post', {
-			post: _post,
-			profile,
-			avatarUrl: await Users.getAvatarUrl(await Users.findOneByOrFail({ id: post.userId })),
-			instanceName: meta.name || 'Misskey',
-			icon: meta.iconUrl,
-			themeColor: meta.themeColor,
-		});
-
-		ctx.set('Cache-Control', 'public, max-age=15');
-
-		return;
-	}
-
-	await next();
-});
-
 //#endregion
 
 router.get('/_info_card_', async ctx => {

@@ -73,11 +73,6 @@ export const navbarItemDef = reactive({
 		icon: 'fas fa-file-alt',
 		to: '/pages',
 	},
-	gallery: {
-		title: 'gallery',
-		icon: 'fas fa-icons',
-		to: '/gallery',
-	},
 	clips: {
 		title: 'clip',
 		icon: 'fas fa-paperclip',
