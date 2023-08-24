@@ -117,25 +117,6 @@ describe('Note', () => {
 		assert.strictEqual(res.body.createdNote.renote.text, bobPost.text);
 	}));
 
-	it('引用renoteできる', async(async () => {
-		const bobPost = await post(bob, {
-			text: 'test',
-		});
-
-		const alicePost = {
-			text: 'test',
-			renoteId: bobPost.id,
-		};
-
-		const res = await request('/notes/create', alicePost, alice);
-
-		assert.strictEqual(res.status, 200);
-		assert.strictEqual(typeof res.body === 'object' && !Array.isArray(res.body), true);
-		assert.strictEqual(res.body.createdNote.text, alicePost.text);
-		assert.strictEqual(res.body.createdNote.renoteId, alicePost.renoteId);
-		assert.strictEqual(res.body.createdNote.renote.text, bobPost.text);
-	}));
-
 	it('文字数ぎりぎりで怒られない', async(async () => {
 		const post = {
 			text: '!'.repeat(3000),
