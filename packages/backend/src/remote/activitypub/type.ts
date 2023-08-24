@@ -110,7 +110,6 @@ export interface IPost extends IObject {
 		content: string;
 		mediaType: string;
 	};
-	_misskey_quote?: string;
 	quoteUrl?: string;
 }
 
@@ -120,7 +119,6 @@ export interface IQuestion extends IObject {
 		content: string;
 		mediaType: string;
 	};
-	_misskey_quote?: string;
 	quoteUrl?: string;
 	oneOf?: IQuestionChoice[];
 	anyOf?: IQuestionChoice[];
@@ -261,7 +259,6 @@ export interface IRemove extends IActivity {
 
 export interface ILike extends IActivity {
 	type: 'Like' | 'EmojiReaction' | 'EmojiReact';
-	_misskey_reaction?: string;
 }
 
 export interface IAnnounce extends IActivity {

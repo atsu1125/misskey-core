@@ -33,7 +33,6 @@ export const renderActivity = (x: any): IActivity | null => {
 				// Misskey
 				misskey: 'https://misskey-hub.net/ns#',
 				'_misskey_content': 'misskey:_misskey_content',
-				'_misskey_reaction': 'misskey:_misskey_reaction',
 				'_misskey_votes': 'misskey:_misskey_votes',
 			},
 		],

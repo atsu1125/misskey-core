@@ -1,8 +1,8 @@
 <template>
 <div class="omfetrab" :class="['s' + size, 'w' + width, 'h' + height, { asDrawer }]" :style="{ maxHeight: maxHeight ? maxHeight + 'px' : undefined }">
-	<input ref="search" v-model.trim="q" class="search" data-prevent-emoji-insert :class="{ filled: q != null && q != '' }" :placeholder="i18n.ts.search" type="search" @paste.stop="paste" @keyup.enter="done()">
+	<input v-if="!isReaction" ref="search" v-model.trim="q" class="search" data-prevent-emoji-insert :class="{ filled: q != null && q != '' }" :placeholder="i18n.ts.search" type="search" @paste.stop="paste" @keyup.enter="done()">
 	<div ref="emojis" class="emojis">
-		<section class="result">
+		<section v-if="!isReaction" class="result">
 			<div v-if="searchResultCustom.length > 0" class="body">
 				<button
 					v-for="emoji in searchResultCustom"
@@ -31,7 +31,7 @@
 		</section>
 
 		<div v-if="tab === 'index'" class="group index">
-			<section v-if="showPinned">
+			<section v-if="showPinned && !isReaction">
 				<div class="body">
 					<button
 						v-for="emoji in pinned"
@@ -45,7 +45,19 @@
 				</div>
 			</section>
 
-			<section>
+			<section v-if="isReaction">
+				<div class="body">
+					<button
+						class="_button item"
+						tabindex="0"
+						@click="chosen(star, $event)"
+					>
+						<MkEmoji class="emoji" :emoji="star" :normal="true"/>
+					</button>
+				</div>
+			</section>
+
+			<section v-if="!isReaction">
 				<header class="_acrylic"><i class="far fa-clock fa-fw"></i> {{ i18n.ts.recentUsed }}</header>
 				<div class="body">
 					<button
@@ -59,11 +71,11 @@
 				</div>
 			</section>
 		</div>
-		<div v-once class="group">
+		<div v-if="!isReaction" v-once class="group">
 			<header class="_acrylic">{{ i18n.ts.customEmojis }}</header>
 			<XSection v-for="category in customEmojiCategories" :key="'custom:' + category" :initial-shown="false" :emojis="customEmojis.filter(e => e.category === category).map(e => ':' + e.name + ':')" @chosen="chosen">{{ category || i18n.ts.other }}</XSection>
 		</div>
-		<div v-once class="group">
+		<div v-if="!isReaction" v-once class="group">
 			<header class="_acrylic">{{ i18n.ts.emoji }}</header>
 			<XSection v-for="category in categories" :key="category" :emojis="emojilist.filter(e => e.category === category).map(e => e.char)" @chosen="chosen">{{ category }}</XSection>
 		</div>
@@ -116,15 +128,17 @@ const {
 	recentlyUsedEmojis,
 } = defaultStore.reactiveState;
 
-const size = computed(() => props.asReactionPicker ? reactionPickerSize.value : 1);
-const width = computed(() => props.asReactionPicker ? reactionPickerWidth.value : 3);
-const height = computed(() => props.asReactionPicker ? reactionPickerHeight.value : 2);
+const size = computed(() => props.asReactionPicker ? 1 : 1);
+const width = computed(() => props.asReactionPicker ? 0.5 : 3);
+const height = computed(() => props.asReactionPicker ? 0.5 : 2);
 const customEmojiCategories = emojiCategories;
 const customEmojis = instance.emojis;
 const q = ref<string | null>(null);
 const searchResultCustom = ref<Misskey.entities.CustomEmoji[]>([]);
 const searchResultUnicode = ref<UnicodeEmojiDef[]>([]);
 const tab = ref<'index' | 'custom' | 'unicode' | 'tags'>('index');
+const isReaction = props.asReactionPicker;
+const star = '⭐️';
 
 watch(q, () => {
 	if (emojis.value) emojis.value.scrollTop = 0;

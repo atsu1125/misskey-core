@@ -20,8 +20,7 @@ const legacies: Record<string, string> = {
 };
 
 export async function getFallbackReaction(): Promise<string> {
-	const meta = await fetchMeta();
-	return meta.useStarForReactionFallback ? '⭐' : '👍';
+	return '⭐';
 }
 
 export function convertLegacyReactions(reactions: Record<string, number>) {
@@ -55,34 +54,6 @@ export function convertLegacyReactions(reactions: Record<string, number>) {
 }
 
 export async function toDbReaction(reaction?: string | null, reacterHost?: string | null): Promise<string> {
-	if (reaction == null) return await getFallbackReaction();
-
-	reacterHost = toPunyNullable(reacterHost);
-
-	// 文字列タイプのリアクションを絵文字に変換
-	if (Object.keys(legacies).includes(reaction)) return legacies[reaction];
-
-	// Unicode絵文字
-	const match = emojiRegex.exec(reaction);
-	if (match) {
-		// 合字を含む1つの絵文字
-		const unicode = match[0];
-
-		// 異体字セレクタ除去
-		return unicode.match('\u200d') ? unicode : unicode.replace(/\ufe0f/g, '');
-	}
-
-	const custom = reaction.match(/^:([\w+-]+)(?:@\.)?:$/);
-	if (custom) {
-		const name = custom[1];
-		const emoji = await Emojis.findOneBy({
-			host: reacterHost ?? IsNull(),
-			name,
-		});
-
-		if (emoji) return reacterHost ? `:${name}@${reacterHost}:` : `:${name}:`;
-	}
-
 	return await getFallbackReaction();
 }
 

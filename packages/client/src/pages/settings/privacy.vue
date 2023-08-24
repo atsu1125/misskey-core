@@ -3,11 +3,6 @@
 	<FormSwitch v-model="isLocked" class="_formBlock" @update:modelValue="save()">{{ i18n.ts.makeFollowManuallyApprove }}<template #caption>{{ i18n.ts.lockedAccountInfo }}</template></FormSwitch>
 	<FormSwitch v-if="isLocked" v-model="autoAcceptFollowed" class="_formBlock" @update:modelValue="save()">{{ i18n.ts.autoAcceptFollowed }}</FormSwitch>
 
-	<FormSwitch v-model="publicReactions" class="_formBlock" @update:modelValue="save()">
-		{{ i18n.ts.makeReactionsPublic }}
-		<template #caption>{{ i18n.ts.makeReactionsPublicDescription }}</template>
-	</FormSwitch>
-
 	<FormSelect v-model="ffVisibility" class="_formBlock" @update:modelValue="save()">
 		<template #label>{{ i18n.ts.ffVisibility }}</template>
 		<option value="public">{{ i18n.ts._ffVisibility.public }}</option>
@@ -68,7 +63,6 @@ let autoAcceptFollowed = $ref($i.autoAcceptFollowed);
 let noCrawle = $ref($i.noCrawle);
 let isExplorable = $ref($i.isExplorable);
 let hideOnlineStatus = $ref($i.hideOnlineStatus);
-let publicReactions = $ref($i.publicReactions);
 let ffVisibility = $ref($i.ffVisibility);
 
 let defaultNoteVisibility = $computed(defaultStore.makeGetterSetter('defaultNoteVisibility'));
@@ -82,7 +76,6 @@ function save() {
 		noCrawle: !!noCrawle,
 		isExplorable: !!isExplorable,
 		hideOnlineStatus: !!hideOnlineStatus,
-		publicReactions: !!publicReactions,
 		ffVisibility: ffVisibility,
 	});
 }
