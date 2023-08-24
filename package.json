@@ -1,10 +1,10 @@
 {
 	"name": "misskey",
-	"version": "12.119.2-fix.5.6",
+	"version": "12.119.2-core.0.1",
 	"codename": "indigo",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/atsu1125/misskey-v12.git"
+		"url": "https://github.com/atsu1125/misskey-core.git"
 	},
 	"engines": {
     "node": ">= 16.0.0"
