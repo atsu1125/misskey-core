@@ -59,7 +59,7 @@ describe('Block', () => {
 	it('ブロックされているユーザーのノートをRenoteできない', async(async () => {
 		const note = await post(alice, { text: 'hello' });
 
-		const res = await request('/notes/create', { renoteId: note.id, text: 'yo' }, bob);
+		const res = await request('/notes/create', { renoteId: note.id }, bob);
 
 		assert.strictEqual(res.status, 400);
 		assert.strictEqual(res.body.error.id, 'b390d7e1-8a5e-46ed-b625-06271cafd3d3');

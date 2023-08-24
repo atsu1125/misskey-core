@@ -182,9 +182,6 @@ export default define(meta, paramDef, async (ps, user) => {
 
 	let renote: Note | null = null;
 	if (ps.renoteId != null) {
-		if (ps.text) {
-			throw new ApiError(meta.errors.accessDenied);
-		}
 		// Fetch renote to note
 		renote = await Notes.findOneBy({ id: ps.renoteId });
 

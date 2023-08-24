@@ -152,6 +152,11 @@ export default async (user: { id: User['id']; username: User['username']; host: 
 		data.visibility = 'followers';
 	}
 
+	// Quoteなら作成できないように
+	if (data.renote && data.text != null) {
+		data.text = null;
+	}
+
 	// 返信対象がpublicではないならhomeにする
 	if (data.reply && data.reply.visibility !== 'public' && data.visibility === 'public') {
 		data.visibility = 'home';
