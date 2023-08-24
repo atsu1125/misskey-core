@@ -3,13 +3,12 @@ import { fetchMeta } from '@/misc/fetch-meta.js';
 import { Notes } from '@/models/index.js';
 import { checkWordMute } from '@/misc/check-word-mute.js';
 import { isUserRelated } from '@/misc/is-user-related.js';
-import { isInstanceMuted } from '@/misc/is-instance-muted.js';
 import { Packed } from '@/misc/schema.js';
 
 export default class extends Channel {
-	public readonly chName = 'hybridTimeline';
+	public readonly chName = 'localTimeline';
 	public static shouldShare = true;
-	public static requireCredential = true;
+	public static requireCredential = false;
 
 	constructor(id: string, connection: Channel['connection']) {
 		super(id, connection);
@@ -18,49 +17,31 @@ export default class extends Channel {
 
 	public async init(params: any) {
 		const meta = await fetchMeta();
-		if (meta.disableLocalTimeline && !this.user!.isAdmin && !this.user!.isModerator) return;
+		if (meta.disableLocalTimeline) {
+			if (this.user == null || (!this.user.isAdmin && !this.user.isModerator)) return;
+		}
 
 		// Subscribe events
 		this.subscriber.on('notesStream', this.onNote);
 	}
 
 	private async onNote(note: Packed<'Note'>) {
-		// 自分自身の投稿 または
-		// その投稿のユーザーをフォローしている または
-		// 全体公開のローカルの投稿
-		if (!(
-			(this.user!.id === note.userId) ||
-			(this.following.has(note.userId)) ||
-			(note.user.host == null && note.visibility === 'public')
-		)) return;
-
+		if (note.user.host !== null) return;
+		if (note.visibility !== 'public') return;
 		if (['{}'].some(x => x.endsWith(note.fileIds))) return;
 
-		if (['followers', 'specified'].includes(note.visibility)) {
-			note = await Notes.pack(note.id, this.user!, {
+		// リプライなら再pack
+		if (note.replyId != null) {
+			note.reply = await Notes.pack(note.replyId, this.user, {
 				detail: true,
 			});
-
-			if (note.isHidden) {
-				return;
-			}
-		} else {
-			// リプライなら再pack
-			if (note.replyId != null) {
-				note.reply = await Notes.pack(note.replyId, this.user!, {
-					detail: true,
-				});
-			}
-			// Renoteなら再pack
-			if (note.renoteId != null) {
-				note.renote = await Notes.pack(note.renoteId, this.user!, {
-					detail: true,
-				});
-			}
 		}
-
-		// Ignore notes from instances the user has muted
-		if (isInstanceMuted(note, new Set<string>(this.userProfile?.mutedInstances ?? []))) return;
+		// Renoteなら再pack
+		if (note.renoteId != null) {
+			note.renote = await Notes.pack(note.renoteId, this.user, {
+				detail: true,
+			});
+		}
 
 		// 関係ない返信は除外
 		if (note.reply && !this.user!.showTimelineReplies) {

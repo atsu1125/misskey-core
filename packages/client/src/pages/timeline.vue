@@ -8,7 +8,7 @@
 
 			<div v-if="queue > 0" class="new"><button class="_buttonPrimary" @click="top()">{{ i18n.ts.newNoteRecived }}</button></div>
 			<div>
-				<div v-if="((src === 'local' || src === 'social') && !isLocalTimelineAvailable) || (src === 'media' && !isMediaTimelineAvailable) || (src === 'personal' && !isPersonalTimelineAvailable) || (src === 'limited' && !isLimitedTimelineAvailable) || (src === 'global' && !isGlobalTimelineAvailable)" class="iwaalbte">
+				<div v-if="(src === 'local' && !isLocalTimelineAvailable) || (src === 'media' && !isMediaTimelineAvailable) || (src === 'global' && !isGlobalTimelineAvailable)" class="iwaalbte">
 					<p>
 						<i class="fas fa-minus-circle"></i>
 						{{ i18n.ts.disabledTimelineTitle }}
@@ -47,8 +47,6 @@ const XTutorial = defineAsyncComponent(() => import('./timeline.tutorial.vue'));
 const isMediaTimelineAvailable = (!instance.disableLocalTimeline || ($i != null && ($i.isModerator || $i.isAdmin))) && defaultStore.state.enableMTL && defaultStore.state.enableLTL;
 const isLocalTimelineAvailable = (!instance.disableLocalTimeline || ($i != null && ($i.isModerator || $i.isAdmin))) && defaultStore.state.enableLTL;
 const isGlobalTimelineAvailable = (!instance.disableGlobalTimeline || ($i != null && ($i.isModerator || $i.isAdmin))) && defaultStore.state.enableGTL;
-const isPersonalTimelineAvailable = $i != null && defaultStore.state.enablePTL;
-const isLimitedTimelineAvailable = $i != null && defaultStore.state.enableLimitedTL;
 const keymap = {
 	't': focus,
 };
@@ -79,7 +77,7 @@ async function chooseList(ev: MouseEvent): Promise<void> {
 	os.popupMenu(items, ev.currentTarget ?? ev.target);
 }
 
-function saveSrc(newSrc: 'home' | 'local' | 'social' | 'global' | 'limited' | 'media' | 'personal'): void {
+function saveSrc(newSrc: 'home' | 'local' | 'media' | 'global'): void {
 	defaultStore.set('tl', {
 		...defaultStore.state.tl,
 		src: newSrc,
@@ -97,35 +95,20 @@ const headerTabs = $computed(() => [{
 	title: i18n.ts._timelines.home,
 	icon: 'fas fa-home',
 	iconOnly: true,
-}, ...(isLimitedTimelineAvailable ? [{
-	key: 'limited',
-	title: i18n.ts._timelines.limited,
-	icon: 'fas fa-unlock',
-	iconOnly: true,
-}] : []), ...(isLocalTimelineAvailable ? [{
+}, ...(isLocalTimelineAvailable ? [{
 	key: 'local',
 	title: i18n.ts._timelines.local,
 	icon: 'fas fa-comments',
 	iconOnly: true,
-}, {
-	key: 'social',
-	title: i18n.ts._timelines.social,
-	icon: 'fas fa-share-alt',
-	iconOnly: true,
 }, ...(isMediaTimelineAvailable ? [{
 	key: 'media',
 	title: i18n.ts._timelines.media,
-	icon: 'fas fa-file',
+	icon: 'fas fa-camera',
 	iconOnly: true,
 }] : [])] : []), ...(isGlobalTimelineAvailable ? [{
 	key: 'global',
 	title: i18n.ts._timelines.global,
 	icon: 'fas fa-globe',
-	iconOnly: true,
-}] : []), ...(isPersonalTimelineAvailable ? [{
-	key: 'personal',
-	title: i18n.ts._timelines.personal,
-	icon: 'fas fa-book',
 	iconOnly: true,
 }] : []), {
 	icon: 'fas fa-list-ul',
@@ -136,7 +119,7 @@ const headerTabs = $computed(() => [{
 
 definePageMetadata(computed(() => ({
 	title: i18n.ts.timeline,
-	icon: src === 'local' ? 'fas fa-comments' : src === 'social' ? 'fas fa-share-alt' : src === 'global' ? 'fas fa-globe' : src === 'limited' ? 'fas fa-unlock' :src === 'media' ? 'fas fa-file' :src === 'personal' ? 'fas fa-book' : 'fas fa-home',
+	icon: src === 'local' ? 'fas fa-comments' : src === 'global' ? 'fas fa-globe' : src === 'media' ? 'fas fa-camera' : 'fas fa-home',
 })));
 </script>
 
