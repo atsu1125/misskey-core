@@ -56,12 +56,14 @@ export const navbarItemDef = reactive({
 		show: computed(() => $i != null),
 		to: '/my/lists',
 	},
+	/*
 	groups: {
 		title: 'groups',
 		icon: 'fas fa-users',
 		show: computed(() => $i != null),
 		to: '/my/groups',
 	},
+	*/
 	favorites: {
 		title: 'favorites',
 		icon: 'fas fa-star',
