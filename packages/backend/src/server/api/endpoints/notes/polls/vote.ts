@@ -143,20 +143,6 @@ export default define(meta, paramDef, async (ps, user) => {
 		choice: ps.choice,
 	});
 
-	// Fetch watchers
-	NoteWatchings.findBy({
-		noteId: note.id,
-		userId: Not(user.id),
-	}).then(watchers => {
-		for (const watcher of watchers) {
-			createNotification(watcher.userId, 'pollVote', {
-				notifierId: user.id,
-				noteId: note.id,
-				choice: ps.choice,
-			});
-		}
-	});
-
 	// リモート投票の場合リプライ送信
 	if (note.userHost != null) {
 		const pollOwner = await Users.findOneByOrFail({ id: note.userId }) as IRemoteUser;

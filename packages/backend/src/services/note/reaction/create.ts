@@ -107,20 +107,6 @@ export default async (user: { id: User['id']; host: User['host']; }, note: Note,
 		});
 	}
 
-	// Fetch watchers
-	NoteWatchings.findBy({
-		noteId: note.id,
-		userId: Not(user.id),
-	}).then(watchers => {
-		for (const watcher of watchers) {
-			createNotification(watcher.userId, 'reaction', {
-				notifierId: user.id,
-				noteId: note.id,
-				reaction: reaction,
-			});
-		}
-	});
-
 	//#region 配信
 	if (Users.isLocalUser(user) && !note.localOnly) {
 		const content = renderActivity(await renderLike(record, note));

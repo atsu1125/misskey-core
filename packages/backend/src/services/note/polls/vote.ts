@@ -63,19 +63,4 @@ export default async function(user: CacheableUser, note: Note, choice: number) {
 		noteId: note.id,
 		choice: choice,
 	});
-
-	// Fetch watchers
-	NoteWatchings.findBy({
-		noteId: note.id,
-		userId: Not(user.id),
-	})
-	.then(watchers => {
-		for (const watcher of watchers) {
-			createNotification(watcher.userId, 'pollVote', {
-				notifierId: user.id,
-				noteId: note.id,
-				choice: choice,
-			});
-		}
-	});
 }

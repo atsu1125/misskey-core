@@ -14,10 +14,6 @@ export const meta = {
 				type: 'boolean',
 				optional: false, nullable: false,
 			},
-			isWatching: {
-				type: 'boolean',
-				optional: false, nullable: false,
-			},
 			isMutedThread: {
 				type: 'boolean',
 				optional: false, nullable: false,
@@ -38,15 +34,8 @@ export const paramDef = {
 export default define(meta, paramDef, async (ps, user) => {
 	const note = await Notes.findOneByOrFail({ id: ps.noteId });
 
-	const [favorite, watching, threadMuting] = await Promise.all([
+	const [favorite, threadMuting] = await Promise.all([
 		NoteFavorites.count({
-			where: {
-				userId: user.id,
-				noteId: note.id,
-			},
-			take: 1,
-		}),
-		NoteWatchings.count({
 			where: {
 				userId: user.id,
 				noteId: note.id,
@@ -64,7 +53,6 @@ export default define(meta, paramDef, async (ps, user) => {
 
 	return {
 		isFavorited: favorite !== 0,
-		isWatching: watching !== 0,
 		isMutedThread: threadMuting !== 0,
 	};
 });

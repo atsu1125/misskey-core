@@ -341,9 +341,6 @@ export default async (user: { id: User['id']; username: User['username']; host: 
 
 		// If has in reply to note
 		if (data.reply) {
-			// Fetch watchers
-			nmRelatedPromises.push(notifyToWatchersOfReplyee(data.reply, user, nm));
-
 			// 通知
 			if (data.reply.userHost === null) {
 				const threadMuted = await NoteThreadMutings.findOneBy({
@@ -373,9 +370,6 @@ export default async (user: { id: User['id']; username: User['username']; host: 
 			if (data.renote.userHost === null) {
 				nm.push(data.renote.userId, type);
 			}
-
-			// Fetch watchers
-			nmRelatedPromises.push(notifyToWatchersOfRenotee(data.renote, user, nm, type));
 
 			// Publish event
 			if ((user.id !== data.renote.userId) && data.renote.userHost === null) {
@@ -565,28 +559,6 @@ function index(note: Note) {
 			userHost: note.userHost,
 		},
 	});
-}
-
-async function notifyToWatchersOfRenotee(renote: Note, user: { id: User['id']; }, nm: NotificationManager, type: NotificationType) {
-	const watchers = await NoteWatchings.findBy({
-		noteId: renote.id,
-		userId: Not(user.id),
-	});
-
-	for (const watcher of watchers) {
-		nm.push(watcher.userId, type);
-	}
-}
-
-async function notifyToWatchersOfReplyee(reply: Note, user: { id: User['id']; }, nm: NotificationManager) {
-	const watchers = await NoteWatchings.findBy({
-		noteId: reply.id,
-		userId: Not(user.id),
-	});
-
-	for (const watcher of watchers) {
-		nm.push(watcher.userId, 'reply');
-	}
 }
 
 async function createMentionedEvents(mentionedUsers: MinimumUser[], note: Note, nm: NotificationManager) {
