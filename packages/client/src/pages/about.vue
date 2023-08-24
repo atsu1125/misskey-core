@@ -142,6 +142,7 @@ const headerTabs = $computed(() => [{
 	icon: 'fas fa-chart-simple',
 }, {
 	key: 'ads',
+	title: i18n.ts.ads,
 	icon: 'fas fa-rectangle-ad',
 }]);
 
