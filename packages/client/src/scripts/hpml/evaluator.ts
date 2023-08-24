@@ -71,7 +71,6 @@ export class Hpml {
 			NOTES_COUNT: opts.visitor ? opts.visitor.notesCount : 0,
 			FOLLOWERS_COUNT: opts.visitor ? opts.visitor.followersCount : 0,
 			FOLLOWING_COUNT: opts.visitor ? opts.visitor.followingCount : 0,
-			IS_CAT: opts.visitor ? opts.visitor.isCat : false,
 			SEED: opts.randomSeed ? opts.randomSeed : '',
 			YMD: `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`,
 			AISCRIPT_DISABLED: !this.opts.enableAiScript,

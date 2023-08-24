@@ -1,9 +1,9 @@
 <template>
-<span v-if="disableLink" v-user-preview="disablePreview ? undefined : user.id" class="eiwwqkts _noSelect" :class="{ cat: user.isCat, square: $store.state.squareAvatars }" :style="{ color }" :title="acct(user)" @click="onClick">
+<span v-if="disableLink" v-user-preview="disablePreview ? undefined : user.id" class="eiwwqkts _noSelect" :class="{ square: $store.state.squareAvatars }" :style="{ color }" :title="acct(user)" @click="onClick">
 	<img class="inner" :src="url" decoding="async"/>
 	<MkUserOnlineIndicator v-if="showIndicator" class="indicator" :user="user"/>
 </span>
-<MkA v-else v-user-preview="disablePreview ? undefined : user.id" class="eiwwqkts _noSelect" :class="{ cat: user.isCat, square: $store.state.squareAvatars }" :style="{ color }" :to="userPage(user)" :title="acct(user)" :target="target">
+<MkA v-else v-user-preview="disablePreview ? undefined : user.id" class="eiwwqkts _noSelect" :class="{ square: $store.state.squareAvatars }" :style="{ color }" :to="userPage(user)" :title="acct(user)" :target="target">
 	<img class="inner" :src="url" decoding="async"/>
 	<MkUserOnlineIndicator v-if="showIndicator" class="indicator" :user="user"/>
 </MkA>
@@ -105,38 +105,6 @@ watch(() => props.user.avatarBlurhash, () => {
 
 		> .inner {
 			border-radius: 20%;
-		}
-	}
-
-	&.cat {
-		&:before, &:after {
-			background: #df548f;
-			border: solid 4px currentColor;
-			box-sizing: border-box;
-			content: '';
-			display: inline-block;
-			height: 50%;
-			width: 50%;
-		}
-
-		&:before {
-			border-radius: 0 75% 75%;
-			transform: rotate(37.5deg) skew(30deg);
-		}
-
-		&:after {
-			border-radius: 75% 0 75% 75%;
-			transform: rotate(-37.5deg) skew(-30deg);
-		}
-
-		&:hover {
-			&:before {
-				animation: earwiggleleft 1s infinite;
-			}
-
-			&:after {
-				animation: earwiggleright 1s infinite;
-			}
 		}
 	}
 }

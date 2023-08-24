@@ -272,17 +272,6 @@ export const NoteRepository = db.getRepository(Note).extend({
 			} : {}),
 		});
 
-		if (packed.user.isCat && packed.text) {
-			const tokens = packed.text ? mfm.parse(packed.text) : [];
-			mfm.inspect(tokens, node => {
-				if (node.type === 'text') {
-					// TODO: quoteなtextはskip
-					node.props.text = nyaize(node.props.text);
-				}
-			});
-			packed.text = mfm.toString(tokens);
-		}
-
 		if (!opts.skipHide) {
 			await hideNote(packed, meId);
 		}

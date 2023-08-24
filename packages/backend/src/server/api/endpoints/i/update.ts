@@ -98,7 +98,6 @@ export const paramDef = {
 		autoAcceptFollowed: { type: 'boolean' },
 		noCrawle: { type: 'boolean' },
 		isBot: { type: 'boolean' },
-		isCat: { type: 'boolean' },
 		showTimelineReplies: { type: 'boolean' },
 		injectFeaturedNote: { type: 'boolean' },
 		receiveAnnouncementEmail: { type: 'boolean' },
@@ -166,7 +165,6 @@ export default define(meta, paramDef, async (ps, _user, token) => {
 	if (typeof ps.carefulBot === 'boolean') profileUpdates.carefulBot = ps.carefulBot;
 	if (typeof ps.autoAcceptFollowed === 'boolean') profileUpdates.autoAcceptFollowed = ps.autoAcceptFollowed;
 	if (typeof ps.noCrawle === 'boolean') profileUpdates.noCrawle = ps.noCrawle;
-	if (typeof ps.isCat === 'boolean') updates.isCat = ps.isCat;
 	if (typeof ps.injectFeaturedNote === 'boolean') profileUpdates.injectFeaturedNote = ps.injectFeaturedNote;
 	if (typeof ps.receiveAnnouncementEmail === 'boolean') profileUpdates.receiveAnnouncementEmail = ps.receiveAnnouncementEmail;
 	if (typeof ps.alwaysMarkNsfw === 'boolean') profileUpdates.alwaysMarkNsfw = ps.alwaysMarkNsfw;
