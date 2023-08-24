@@ -21,7 +21,6 @@ export const renderActivity = (x: any): IActivity | null => {
 				manuallyApprovesFollowers: 'as:manuallyApprovesFollowers',
 				sensitive: 'as:sensitive',
 				Hashtag: 'as:Hashtag',
-				quoteUrl: 'as:quoteUrl',
 				// Mastodon
 				toot: 'http://joinmastodon.org/ns#',
 				Emoji: 'toot:Emoji',
@@ -36,8 +35,6 @@ export const renderActivity = (x: any): IActivity | null => {
 				'_misskey_content': 'misskey:_misskey_content',
 				'_misskey_reaction': 'misskey:_misskey_reaction',
 				'_misskey_votes': 'misskey:_misskey_votes',
-				// vcard
-				vcard: 'http://www.w3.org/2006/vcard/ns#',
 			},
 		],
 	}, x);

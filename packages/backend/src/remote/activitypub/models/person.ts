@@ -157,8 +157,6 @@ export async function createPerson(uri: string, resolver?: Resolver): Promise<Us
 
 	const isBot = getApType(object) === 'Service';
 
-	const bday = person['vcard:bday']?.match(/^\d{4}-\d{2}-\d{2}/);
-
 	// Create user
 	let user: IRemoteUser;
 	try {
@@ -192,8 +190,8 @@ export async function createPerson(uri: string, resolver?: Resolver): Promise<Us
 				description: person.summary ? htmlToMfm(truncate(person.summary, summaryLength), person.tag) : null,
 				url: getOneApHrefNullable(person.url),
 				fields,
-				birthday: bday ? bday[0] : null,
-				location: person['vcard:Address'] || null,
+				birthday: null,
+				location: null,
 				userHost: host,
 			}));
 
@@ -368,8 +366,8 @@ export async function updatePerson(uri: string, resolver?: Resolver | null, hint
 		url: getOneApHrefNullable(person.url),
 		fields,
 		description: person.summary ? htmlToMfm(truncate(person.summary, summaryLength), person.tag) : null,
-		birthday: bday ? bday[0] : null,
-		location: person['vcard:Address'] || null,
+		birthday: null,
+		location: null,
 	});
 
 	publishInternalEvent('remoteUserUpdated', { id: exist.id });

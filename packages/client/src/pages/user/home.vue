@@ -45,14 +45,6 @@
 						<p v-else class="empty">{{ i18n.ts.noAccountDescription }}</p>
 					</div>
 					<div class="fields system">
-						<dl v-if="user.location" class="field">
-							<dt class="name"><i class="fas fa-map-marker fa-fw"></i> {{ i18n.ts.location }}</dt>
-							<dd class="value">{{ user.location }}</dd>
-						</dl>
-						<dl v-if="user.birthday" class="field">
-							<dt class="name"><i class="fas fa-birthday-cake fa-fw"></i> {{ i18n.ts.birthday }}</dt>
-							<dd class="value">{{ user.birthday.replace('-', '/').replace('-', '/') }} ({{ $t('yearsOld', { age }) }})</dd>
-						</dl>
 						<dl class="field">
 							<dt class="name"><i class="fas fa-calendar-alt fa-fw"></i> {{ i18n.ts.registeredDate }}</dt>
 							<dd class="value">{{ new Date(user.createdAt).toLocaleString() }} (<MkTime :time="user.createdAt"/>)</dd>
@@ -109,7 +101,6 @@
 
 <script lang="ts" setup>
 import { defineAsyncComponent, computed, inject, onMounted, onUnmounted, watch } from 'vue';
-import calcAge from 's-age';
 import * as misskey from 'misskey-js';
 import XUserTimeline from './index.timeline.vue';
 import XNote from '@/components/MkNote.vue';
@@ -148,10 +139,6 @@ const style = $computed(() => {
 	return {
 		backgroundImage: `url(${ props.user.bannerUrl })`,
 	};
-});
-
-const age = $computed(() => {
-	return calcAge(props.user.birthday);
 });
 
 function menu(ev) {

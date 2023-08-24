@@ -72,8 +72,6 @@ export const paramDef = {
 	properties: {
 		name: { ...Users.nameSchema, nullable: true },
 		description: { ...Users.descriptionSchema, nullable: true },
-		location: { ...Users.locationSchema, nullable: true },
-		birthday: { ...Users.birthdaySchema, nullable: true },
 		lang: { type: 'string', enum: [null, ...Object.keys(langmap)], nullable: true },
 		avatarId: { type: 'string', format: 'misskey:id', nullable: true },
 		bannerId: { type: 'string', format: 'misskey:id', nullable: true },
@@ -133,8 +131,6 @@ export default define(meta, paramDef, async (ps, _user, token) => {
 	if (ps.name !== undefined) updates.name = ps.name;
 	if (ps.description !== undefined) profileUpdates.description = ps.description;
 	if (ps.lang !== undefined) profileUpdates.lang = ps.lang;
-	if (ps.location !== undefined) profileUpdates.location = ps.location;
-	if (ps.birthday !== undefined) profileUpdates.birthday = ps.birthday;
 	if (ps.ffVisibility !== undefined) profileUpdates.ffVisibility = ps.ffVisibility;
 	if (ps.avatarId !== undefined) updates.avatarId = ps.avatarId;
 	if (ps.bannerId !== undefined) updates.bannerId = ps.bannerId;

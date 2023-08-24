@@ -17,16 +17,6 @@
 		<template #caption>{{ i18n.ts._profile.youCanIncludeHashtags }}</template>
 	</FormTextarea>
 
-	<FormInput v-model="profile.location" manual-save class="_formBlock">
-		<template #label>{{ i18n.ts.location }}</template>
-		<template #prefix><i class="fas fa-map-marker-alt"></i></template>
-	</FormInput>
-
-	<FormInput v-model="profile.birthday" type="date" manual-save class="_formBlock">
-		<template #label>{{ i18n.ts.birthday }}</template>
-		<template #prefix><i class="fas fa-birthday-cake"></i></template>
-	</FormInput>
-
 	<FormSelect v-model="profile.lang" class="_formBlock">
 		<template #label>{{ i18n.ts.language }}</template>
 		<option v-for="x in Object.keys(langmap)" :key="x" :value="x">{{ langmap[x].nativeName }}</option>
@@ -115,8 +105,6 @@ function save() {
 	os.apiWithDialog('i/update', {
 		name: profile.name || null,
 		description: profile.description || null,
-		location: profile.location || null,
-		birthday: profile.birthday || null,
 		lang: profile.lang || null,
 		isBot: !!profile.isBot,
 		showTimelineReplies: !!profile.showTimelineReplies,
