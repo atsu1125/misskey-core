@@ -43,7 +43,7 @@ import { getActiveWebhooks } from '@/misc/webhook-cache.js';
 
 const mutedWordsCache = new Cache<{ userId: UserProfile['userId']; mutedWords: UserProfile['mutedWords']; }[]>(1000 * 60 * 5);
 
-type NotificationType = 'reply' | 'renote' | 'quote' | 'mention';
+type NotificationType = 'reply' | 'renote' | 'mention';
 
 class NotificationManager {
 	private notifier: { id: User['id']; };
@@ -364,7 +364,7 @@ export default async (user: { id: User['id']; username: User['username']; host: 
 
 		// If it is renote
 		if (data.renote) {
-			const type = data.text ? 'quote' : 'renote';
+			const type = 'renote';
 
 			// Notify
 			if (data.renote.userHost === null) {

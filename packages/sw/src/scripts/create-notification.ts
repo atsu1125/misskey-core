@@ -100,26 +100,6 @@ async function composeNotification<K extends keyof pushNotificationDataMap>(data
 						],
 					}];
 
-				case 'quote':
-					return [t('_notification.youGotQuote', { name: getUserName(data.body.user) }), {
-						body: data.body.note.text || '',
-						icon: data.body.user.avatarUrl,
-						badge: iconUrl('quote-right'),
-						data,
-						actions: [
-							{
-								action: 'reply',
-								title: t('_notification._actions.reply')
-							},
-							...((data.body.note.visibility === 'public' || data.body.note.visibility === 'home') ? [
-							{
-								action: 'renote',
-								title: t('_notification._actions.renote')
-							}
-							] : [])
-						],
-					}];
-
 				case 'reaction':
 					let reaction = data.body.reaction;
 					let badge: string | undefined;

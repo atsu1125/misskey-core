@@ -23,9 +23,6 @@
 		<FormSwitch v-model="emailNotification_reply" class="_formBlock">
 			{{ i18n.ts._notification._types.reply }}
 		</FormSwitch>
-		<FormSwitch v-model="emailNotification_quote" class="_formBlock">
-			{{ i18n.ts._notification._types.quote }}
-		</FormSwitch>
 		<FormSwitch v-model="emailNotification_follow" class="_formBlock">
 			{{ i18n.ts._notification._types.follow }}
 		</FormSwitch>
@@ -69,7 +66,6 @@ const saveEmailAddress = () => {
 
 const emailNotification_mention = ref($i!.emailNotificationTypes.includes('mention'));
 const emailNotification_reply = ref($i!.emailNotificationTypes.includes('reply'));
-const emailNotification_quote = ref($i!.emailNotificationTypes.includes('quote'));
 const emailNotification_follow = ref($i!.emailNotificationTypes.includes('follow'));
 const emailNotification_receiveFollowRequest = ref($i!.emailNotificationTypes.includes('receiveFollowRequest'));
 
@@ -78,10 +74,8 @@ const saveNotificationSettings = () => {
 		emailNotificationTypes: [
 			...[emailNotification_mention.value ? 'mention' : null],
 			...[emailNotification_reply.value ? 'reply' : null],
-			...[emailNotification_quote.value ? 'quote' : null],
 			...[emailNotification_follow.value ? 'follow' : null],
 			...[emailNotification_receiveFollowRequest.value ? 'receiveFollowRequest' : null],
-			...[emailNotification_groupInvited.value ? 'groupInvited' : null],
 		].filter(x => x != null),
 	});
 };

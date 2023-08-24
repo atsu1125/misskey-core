@@ -11,7 +11,6 @@
 			<i v-else-if="notification.type === 'renote'" class="fas fa-retweet"></i>
 			<i v-else-if="notification.type === 'reply'" class="fas fa-reply"></i>
 			<i v-else-if="notification.type === 'mention'" class="fas fa-at"></i>
-			<i v-else-if="notification.type === 'quote'" class="fas fa-quote-left"></i>
 			<i v-else-if="notification.type === 'pollVote'" class="fas fa-poll-h"></i>
 			<i v-else-if="notification.type === 'pollEnded'" class="fas fa-poll-h"></i>
 			<!-- notification.reaction が null になることはまずないが、ここでoptional chaining使うと一部ブラウザで刺さるので念の為 -->
@@ -47,9 +46,6 @@
 		<MkA v-if="notification.type === 'mention'" class="text" :to="notePage(notification.note)" :title="getNoteSummary(notification.note)">
 			<Mfm :text="getNoteSummary(notification.note)" :plain="true" :nowrap="!full" :custom-emojis="notification.note.emojis"/>
 		</MkA>
-		<MkA v-if="notification.type === 'quote'" class="text" :to="notePage(notification.note)" :title="getNoteSummary(notification.note)">
-			<Mfm :text="getNoteSummary(notification.note)" :plain="true" :nowrap="!full" :custom-emojis="notification.note.emojis"/>
-		</MkA>
 		<MkA v-if="notification.type === 'pollVote'" class="text" :to="notePage(notification.note)" :title="getNoteSummary(notification.note)">
 			<i class="fas fa-quote-left"></i>
 			<Mfm :text="getNoteSummary(notification.note)" :plain="true" :nowrap="!full" :custom-emojis="notification.note.emojis"/>
@@ -63,7 +59,6 @@
 		<span v-if="notification.type === 'follow'" class="text" style="opacity: 0.6;">{{ i18n.ts.youGotNewFollower }}<div v-if="full"><MkFollowButton :user="notification.user" :full="true"/></div></span>
 		<span v-if="notification.type === 'followRequestAccepted'" class="text" style="opacity: 0.6;">{{ i18n.ts.followRequestAccepted }}</span>
 		<span v-if="notification.type === 'receiveFollowRequest'" class="text" style="opacity: 0.6;">{{ i18n.ts.receiveFollowRequest }}<div v-if="full && !followRequestDone"><button class="_textButton" @click="acceptFollowRequest()">{{ i18n.ts.accept }}</button> | <button class="_textButton" @click="rejectFollowRequest()">{{ i18n.ts.reject }}</button></div></span>
-		<span v-if="notification.type === 'groupInvited'" class="text" style="opacity: 0.6;">{{ i18n.ts.groupInvited }}: <b>{{ notification.invitation.group.name }}</b><div v-if="full && !groupInviteDone"><button class="_textButton" @click="acceptGroupInvitation()">{{ i18n.ts.accept }}</button> | <button class="_textButton" @click="rejectGroupInvitation()">{{ i18n.ts.reject }}</button></div></span>
 		<span v-if="notification.type === 'app'" class="text">
 			<Mfm :text="notification.body" :nowrap="!full"/>
 		</span>
@@ -127,7 +122,6 @@ onUnmounted(() => {
 });
 
 const followRequestDone = ref(false);
-const groupInviteDone = ref(false);
 
 const acceptFollowRequest = () => {
 	followRequestDone.value = true;
@@ -137,16 +131,6 @@ const acceptFollowRequest = () => {
 const rejectFollowRequest = () => {
 	followRequestDone.value = true;
 	os.api('following/requests/reject', { userId: props.notification.user.id });
-};
-
-const acceptGroupInvitation = () => {
-	groupInviteDone.value = true;
-	os.apiWithDialog('users/groups/invitations/accept', { invitationId: props.notification.invitation.id });
-};
-
-const rejectGroupInvitation = () => {
-	groupInviteDone.value = true;
-	os.api('users/groups/invitations/reject', { invitationId: props.notification.invitation.id });
 };
 
 useTooltip(reactionRef, (showing) => {

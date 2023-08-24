@@ -91,10 +91,6 @@ export default async function renderNote(note: Note, dive = true, isTalk = false
 
 	let apText = text;
 
-	if (quote) {
-		apText += `\n\nRE: ${quote}`;
-	}
-
 	const summary = note.cw === '' ? String.fromCharCode(0x200B) : note.cw;
 
 	const content = toHtml(Object.assign({}, note, {
@@ -137,8 +133,6 @@ export default async function renderNote(note: Note, dive = true, isTalk = false
 			content: text,
 			mediaType: "text/x.misskeymarkdown",
 		},
-		_misskey_quote: quote,
-		quoteUrl: quote,
 		published: note.createdAt.toISOString(),
 		to,
 		cc,

@@ -67,14 +67,6 @@ const renote = (viaKeyboard = false) => {
 				localOnly,
 			});
 		},
-	}, {
-		text: i18n.ts.quote,
-		icon: 'fas fa-quote-right',
-		action: () => {
-			os.post({
-				renote: props.note,
-			});
-		},
 	}], buttonRef.value, {
 		viaKeyboard,
 	});

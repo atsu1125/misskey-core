@@ -71,6 +71,12 @@ export const meta = {
 			code: 'YOU_HAVE_BEEN_BLOCKED',
 			id: 'b390d7e1-8a5e-46ed-b625-06271cafd3d3',
 		},
+
+		accessDenied: {
+			message: 'Access denied.',
+			code: 'ACCESS_DENIED',
+			id: 'fe8d7103-0ea8-4ec3-814d-f8b401dc69e9',
+		},
 	},
 } as const;
 
@@ -177,6 +183,9 @@ export default define(meta, paramDef, async (ps, user) => {
 
 	let renote: Note | null = null;
 	if (ps.renoteId != null) {
+		if (ps.text) {
+			throw new ApiError(meta.errors.accessDenied);
+		}
 		// Fetch renote to note
 		renote = await Notes.findOneBy({ id: ps.renoteId });
 
