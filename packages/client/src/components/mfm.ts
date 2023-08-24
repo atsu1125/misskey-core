@@ -86,6 +86,18 @@ export default defineComponent({
 					}, genEl(token.children));
 				}
 
+				case 'fn': {
+					// TODO: CSSを文字列で組み立てていくと token.props.args.~~~ 経由でCSSインジェクションできるのでよしなにやる
+					let style;
+					if (style == null) {
+						return h('span', {}, ['$[', token.props.name, ' ', ...genEl(token.children), ']']);
+					} else {
+						return h('span', {
+							style: 'display: inline-block;' + style,
+						}, genEl(token.children));
+					}
+				}
+
 				case 'small': {
 					return [h('small', {
 						style: 'opacity: 0.7;',
