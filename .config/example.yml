@@ -88,13 +88,10 @@ redis:
 # ONCE YOU HAVE STARTED THE INSTANCE, DO NOT CHANGE THE
 # ID SETTINGS AFTER THAT!
 
-id: 'uuid'
+id: 'ulid'
 
 #   ┌─────────────────────┐
 #───┘ Other configuration └─────────────────────────────────────
-# Whether Disable Antenna
-#disableAntenna: true
-
 # Whether Disable Search
 #disableSearch: true
 
