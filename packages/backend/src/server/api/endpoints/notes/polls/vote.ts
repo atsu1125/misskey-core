@@ -136,13 +136,6 @@ export default define(meta, paramDef, async (ps, user) => {
 		userId: user.id,
 	});
 
-	// Notify
-	createNotification(note.userId, 'pollVote', {
-		notifierId: user.id,
-		noteId: note.id,
-		choice: ps.choice,
-	});
-
 	// リモート投票の場合リプライ送信
 	if (note.userHost != null) {
 		const pollOwner = await Users.findOneByOrFail({ id: note.userId }) as IRemoteUser;

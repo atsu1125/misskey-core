@@ -56,11 +56,4 @@ export default async function(user: CacheableUser, note: Note, choice: number) {
 		choice: choice,
 		userId: user.id,
 	});
-
-	// Notify
-	createNotification(note.userId, 'pollVote', {
-		notifierId: user.id,
-		noteId: note.id,
-		choice: choice,
-	});
 }

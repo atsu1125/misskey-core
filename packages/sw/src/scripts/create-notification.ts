@@ -148,14 +148,6 @@ async function composeNotification<K extends keyof pushNotificationDataMap>(data
 						],
 					}];
 
-				case 'pollVote':
-					return [t('_notification.youGotPoll', { name: getUserName(data.body.user) }), {
-						body: data.body.note.text || '',
-						icon: data.body.user.avatarUrl,
-						badge: iconUrl('poll-h'),
-						data,
-					}];
-
 				case 'pollEnded':
 					return [t('_notification.pollEnded'), {
 						body: data.body.note.text || '',

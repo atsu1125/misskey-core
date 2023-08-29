@@ -11,7 +11,6 @@
 			<i v-else-if="notification.type === 'renote'" class="fas fa-retweet"></i>
 			<i v-else-if="notification.type === 'reply'" class="fas fa-reply"></i>
 			<i v-else-if="notification.type === 'mention'" class="fas fa-at"></i>
-			<i v-else-if="notification.type === 'pollVote'" class="fas fa-poll-h"></i>
 			<i v-else-if="notification.type === 'pollEnded'" class="fas fa-poll-h"></i>
 			<!-- notification.reaction が null になることはまずないが、ここでoptional chaining使うと一部ブラウザで刺さるので念の為 -->
 			<XReactionIcon
@@ -45,11 +44,6 @@
 		</MkA>
 		<MkA v-if="notification.type === 'mention'" class="text" :to="notePage(notification.note)" :title="getNoteSummary(notification.note)">
 			<Mfm :text="getNoteSummary(notification.note)" :plain="true" :nowrap="!full" :custom-emojis="notification.note.emojis"/>
-		</MkA>
-		<MkA v-if="notification.type === 'pollVote'" class="text" :to="notePage(notification.note)" :title="getNoteSummary(notification.note)">
-			<i class="fas fa-quote-left"></i>
-			<Mfm :text="getNoteSummary(notification.note)" :plain="true" :nowrap="!full" :custom-emojis="notification.note.emojis"/>
-			<i class="fas fa-quote-right"></i>
 		</MkA>
 		<MkA v-if="notification.type === 'pollEnded'" class="text" :to="notePage(notification.note)" :title="getNoteSummary(notification.note)">
 			<i class="fas fa-quote-left"></i>
