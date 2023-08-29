@@ -335,10 +335,6 @@ export const routes = [{
 		name: 'email-block',
 		component: iAmAdmin ? page(() => import('./pages/admin/email-block.vue')) : page(() => import('./pages/not-found.vue')),
 	}, {
-		path: '/proxy-account',
-		name: 'proxy-account',
-		component: iAmAdmin ? page(() => import('./pages/admin/proxy-account.vue')) : page(() => import('./pages/not-found.vue')),
-	}, {
 		path: '/other-settings',
 		name: 'other-settings',
 		component: iAmAdmin ? page(() => import('./pages/admin/other-settings.vue')) : page(() => import('./pages/not-found.vue')),
