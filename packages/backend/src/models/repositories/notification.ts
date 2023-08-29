@@ -47,12 +47,6 @@ export const NotificationRepository = db.getRepository(Notification).extend({
 					_hint_: options._hintForEachNotes_,
 				}),
 			} : {}),
-			...(notification.type === 'quote' ? {
-				note: Notes.pack(notification.note || notification.noteId!, { id: notification.notifieeId }, {
-					detail: true,
-					_hint_: options._hintForEachNotes_,
-				}),
-			} : {}),
 			...(notification.type === 'reaction' ? {
 				note: Notes.pack(notification.note || notification.noteId!, { id: notification.notifieeId }, {
 					detail: true,
@@ -60,21 +54,11 @@ export const NotificationRepository = db.getRepository(Notification).extend({
 				}),
 				reaction: notification.reaction,
 			} : {}),
-			...(notification.type === 'pollVote' ? {
-				note: Notes.pack(notification.note || notification.noteId!, { id: notification.notifieeId }, {
-					detail: true,
-					_hint_: options._hintForEachNotes_,
-				}),
-				choice: notification.choice,
-			} : {}),
 			...(notification.type === 'pollEnded' ? {
 				note: Notes.pack(notification.note || notification.noteId!, { id: notification.notifieeId }, {
 					detail: true,
 					_hint_: options._hintForEachNotes_,
 				}),
-			} : {}),
-			...(notification.type === 'groupInvited' ? {
-				invitation: UserGroupInvitations.pack(notification.userGroupInvitationId!),
 			} : {}),
 			...(notification.type === 'app' ? {
 				body: notification.customBody,
