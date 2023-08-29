@@ -55,7 +55,6 @@ export const paramDef = {
 		sensitiveMediaDetectionSensitivity: { type: 'string', enum: ['medium', 'low', 'high', 'veryLow', 'veryHigh'] },
 		setSensitiveFlagAutomatically: { type: 'boolean' },
 		enableSensitiveMediaDetectionForVideos: { type: 'boolean' },
-		proxyAccountId: { type: 'string', format: 'misskey:id', nullable: true },
 		maintainerName: { type: 'string', nullable: true },
 		maintainerEmail: { type: 'string', nullable: true },
 		pinnedPages: { type: 'array', items: {
@@ -239,10 +238,6 @@ export default define(meta, paramDef, async (ps, me) => {
 
 	if (ps.enableSensitiveMediaDetectionForVideos !== undefined) {
 		set.enableSensitiveMediaDetectionForVideos = ps.enableSensitiveMediaDetectionForVideos;
-	}
-
-	if (ps.proxyAccountId !== undefined) {
-		set.proxyAccountId = ps.proxyAccountId;
 	}
 
 	if (ps.maintainerName !== undefined) {

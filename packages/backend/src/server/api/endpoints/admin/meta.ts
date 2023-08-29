@@ -219,11 +219,6 @@ export const meta = {
 				type: 'boolean',
 				optional: true, nullable: false,
 			},
-			proxyAccountId: {
-				type: 'string',
-				optional: true, nullable: true,
-				format: 'id',
-			},
 			twitterConsumerKey: {
 				type: 'string',
 				optional: true, nullable: true,
@@ -403,7 +398,6 @@ export default define(meta, paramDef, async (ps, me) => {
 		sensitiveMediaDetectionSensitivity: instance.sensitiveMediaDetectionSensitivity,
 		setSensitiveFlagAutomatically: instance.setSensitiveFlagAutomatically,
 		enableSensitiveMediaDetectionForVideos: instance.enableSensitiveMediaDetectionForVideos,
-		proxyAccountId: instance.proxyAccountId,
 		twitterConsumerKey: instance.twitterConsumerKey,
 		twitterConsumerSecret: instance.twitterConsumerSecret,
 		githubClientId: instance.githubClientId,

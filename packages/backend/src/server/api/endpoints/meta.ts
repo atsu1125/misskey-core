@@ -390,9 +390,6 @@ export default define(meta, paramDef, async (ps, me) => {
 	};
 
 	if (ps.detail) {
-		const proxyAccount = instance.proxyAccountId ? await Users.pack(instance.proxyAccountId).catch(() => null) : null;
-
-		response.proxyAccountName = proxyAccount ? proxyAccount.username : null;
 		response.features = {
 			registration: !instance.disableRegistration,
 			localTimeLine: !instance.disableLocalTimeline,

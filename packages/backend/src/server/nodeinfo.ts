@@ -35,8 +35,6 @@ const nodeinfo2 = async () => {
 		Notes.count({ where: { userHost: IsNull() } }),
 	]);
 
-	const proxyAccount = meta.proxyAccountId ? await Users.pack(meta.proxyAccountId).catch(() => null) : null;
-
 	return {
 		software: {
 			name: 'misskey',
@@ -77,7 +75,6 @@ const nodeinfo2 = async () => {
 			enableDiscordIntegration: meta.enableDiscordIntegration,
 			enableEmail: meta.enableEmail,
 			enableServiceWorker: meta.enableServiceWorker,
-			proxyAccountName: proxyAccount ? proxyAccount.username : null,
 			themeColor: meta.themeColor || '#86b300',
 		},
 	};

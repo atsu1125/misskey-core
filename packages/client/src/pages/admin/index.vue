@@ -188,11 +188,6 @@ const menuDef = $computed(() => [{
 		to: '/admin/email-block',
 		active: currentPage?.route.name === 'email-block',
 	}, {
-		icon: 'fas fa-ghost',
-		text: i18n.ts.proxyAccount,
-		to: '/admin/proxy-account',
-		active: currentPage?.route.name === 'proxy-account',
-	}, {
 		icon: 'fas fa-cogs',
 		text: i18n.ts.other,
 		to: '/admin/other-settings',
