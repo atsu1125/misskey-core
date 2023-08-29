@@ -3,7 +3,7 @@
 	ref="modal"
 	v-slot="{ type, maxHeight }"
 	:z-priority="'middle'"
-	:prefer-type="asReactionPicker && defaultStore.state.reactionPickerUseDrawerForMobile === false ? 'popup' : 'auto'"
+	:prefer-type="'popup'"
 	:transparent-bg="true"
 	:manual-showing="manualShowing"
 	:src="src"

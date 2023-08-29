@@ -39,11 +39,6 @@
 		<option :value="4">{{ i18n.ts.large }}+</option>
 	</FormRadios>
 
-	<FormSwitch v-model="reactionPickerUseDrawerForMobile" class="_formBlock">
-		{{ i18n.ts.useDrawerReactionPickerForMobile }}
-		<template #caption>{{ i18n.ts.needReloadToApply }}</template>
-	</FormSwitch>
-
 	<FormSection>
 		<div style="display: flex; gap: var(--margin); flex-wrap: wrap;">
 			<FormButton inline @click="preview"><i class="fas fa-eye"></i> {{ i18n.ts.preview }}</FormButton>
@@ -72,7 +67,6 @@ let reactions = $ref(JSON.parse(JSON.stringify(defaultStore.state.reactions)));
 const reactionPickerSize = $computed(defaultStore.makeGetterSetter('reactionPickerSize'));
 const reactionPickerWidth = $computed(defaultStore.makeGetterSetter('reactionPickerWidth'));
 const reactionPickerHeight = $computed(defaultStore.makeGetterSetter('reactionPickerHeight'));
-const reactionPickerUseDrawerForMobile = $computed(defaultStore.makeGetterSetter('reactionPickerUseDrawerForMobile'));
 
 function save() {
 	defaultStore.set('reactions', reactions);
