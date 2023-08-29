@@ -88,11 +88,6 @@ const menuDef = computed(() => [{
 		to: '/settings/email',
 		active: currentPage?.route.name === 'email',
 	}, {
-		icon: 'fas fa-share-alt',
-		text: i18n.ts.integration,
-		to: '/settings/integration',
-		active: currentPage?.route.name === 'integration',
-	}, {
 		icon: 'fas fa-lock',
 		text: i18n.ts.security,
 		to: '/settings/security',

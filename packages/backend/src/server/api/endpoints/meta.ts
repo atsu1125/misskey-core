@@ -268,18 +268,6 @@ export const meta = {
 						type: 'boolean',
 						optional: false, nullable: false,
 					},
-					twitter: {
-						type: 'boolean',
-						optional: false, nullable: false,
-					},
-					github: {
-						type: 'boolean',
-						optional: false, nullable: false,
-					},
-					discord: {
-						type: 'boolean',
-						optional: false, nullable: false,
-					},
 					serviceWorker: {
 						type: 'boolean',
 						optional: false, nullable: false,
@@ -371,10 +359,6 @@ export default define(meta, paramDef, async (ps, me) => {
 		})),
 		enableEmail: instance.enableEmail,
 
-		enableTwitterIntegration: instance.enableTwitterIntegration,
-		enableGithubIntegration: instance.enableGithubIntegration,
-		enableDiscordIntegration: instance.enableDiscordIntegration,
-
 		enableServiceWorker: instance.enableServiceWorker,
 
 		translatorAvailable: instance.deeplAuthKey != null,
@@ -399,9 +383,6 @@ export default define(meta, paramDef, async (ps, me) => {
 			hcaptcha: instance.enableHcaptcha,
 			recaptcha: instance.enableRecaptcha,
 			objectStorage: instance.useObjectStorage,
-			twitter: instance.enableTwitterIntegration,
-			github: instance.enableGithubIntegration,
-			discord: instance.enableDiscordIntegration,
 			serviceWorker: instance.enableServiceWorker,
 			miauth: true,
 		};
