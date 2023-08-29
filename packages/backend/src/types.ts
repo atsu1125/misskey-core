@@ -1,4 +1,4 @@
-export const notificationTypes = ['follow', 'mention', 'reply', 'renote', 'reaction', 'pollEnded', 'receiveFollowRequest', 'followRequestAccepted', 'app'] as const;
+export const notificationTypes = ['follow', 'mention', 'reply', 'renote', 'reaction', 'pollEnded', 'receiveFollowRequest', 'app'] as const;
 
 export const noteVisibilities = ['public', 'home', 'followers', 'specified'] as const;
 

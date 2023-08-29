@@ -173,14 +173,6 @@ async function composeNotification<K extends keyof pushNotificationDataMap>(data
 						],
 					}];
 
-				case 'followRequestAccepted':
-					return [t('_notification.yourFollowRequestAccepted'), {
-						body: getUserName(data.body.user),
-						icon: data.body.user.avatarUrl,
-						badge: iconUrl('check'),
-						data,
-					}];
-
 				case 'app':
 						return [data.body.header || data.body.body, {
 							body: data.body.header && data.body.body,

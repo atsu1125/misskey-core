@@ -57,11 +57,6 @@ export async function insertFollowingDoc(followee: { id: User['id']; host: User[
 			followeeId: followee.id,
 			followerId: follower.id,
 		});
-
-		// 通知を作成
-		createNotification(follower.id, 'followRequestAccepted', {
-			notifierId: followee.id,
-		});
 	}
 
 	if (alreadyFollowed) return;
