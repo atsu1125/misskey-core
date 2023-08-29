@@ -6,7 +6,7 @@ const ev = new Xev();
 export default class extends Channel {
 	public readonly chName = 'queueStats';
 	public static shouldShare = true;
-	public static requireCredential = false;
+	public static requireCredential = true;
 
 	constructor(id: string, connection: Channel['connection']) {
 		super(id, connection);
