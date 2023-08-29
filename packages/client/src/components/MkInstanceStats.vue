@@ -34,7 +34,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="subpub">
+	<div v-if="$i" class="subpub">
 		<div class="sub">
 			<div class="title">Sub</div>
 			<canvas ref="subDoughnutEl"></canvas>
@@ -72,6 +72,7 @@ import MkChart from '@/components/MkChart.vue';
 import { useChartTooltip } from '@/scripts/use-chart-tooltip';
 import * as os from '@/os';
 import { i18n } from '@/i18n';
+import { $i } from '@/account';
 
 Chart.register(
 	ArcElement,

@@ -36,7 +36,7 @@
 		</FormSplit>
 	</div>
 
-	<MkPagination v-slot="{items}" ref="instances" :key="host + state" :pagination="pagination">
+	<MkPagination v-if="$i" v-slot="{items}" ref="instances" :key="host + state" :pagination="pagination">
 		<div class="dqokceoi">
 			<MkA v-for="instance in items" :key="instance.id" v-tooltip.mfm="`Last communicated: ${new Date(instance.lastCommunicatedAt).toLocaleString()}\nStatus: ${getStatus(instance)}`" class="instance" :to="`/instance-info/${instance.host}`">
 				<MkInstanceCardMini :instance="instance"/>
@@ -56,6 +56,7 @@ import MkInstanceCardMini from '@/components/MkInstanceCardMini.vue';
 import FormSplit from '@/components/form/split.vue';
 import * as os from '@/os';
 import { i18n } from '@/i18n';
+import { $i } from '@/account';
 
 let host = $ref('');
 let state = $ref('federating');
