@@ -85,14 +85,6 @@ router.use(discord.routes());
 router.use(github.routes());
 router.use(twitter.routes());
 
-router.get('/v1/instance/peers', async ctx => {
-	const instances = await Instances.find({
-		select: ['host'],
-	});
-
-	ctx.body = instances.map(instance => instance.host);
-});
-
 router.post('/miauth/:session/check', async ctx => {
 	const token = await AccessTokens.findOneBy({
 		session: ctx.params.session,
