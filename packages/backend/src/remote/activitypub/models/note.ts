@@ -144,9 +144,7 @@ export async function createNote(value: string | IObject, resolver?: Resolver, s
 
 	// テキストのパース
 	let text: string | null = null;
-	if (note.source?.mediaType === 'text/x.misskeymarkdown' && typeof note.source?.content === 'string') {
-		text = note.source.content;
-	} else if (typeof note.content === 'string') {
+	if (typeof note.content === 'string') {
 		text = htmlToMfm(note.content, note.tag);
 	}
 
