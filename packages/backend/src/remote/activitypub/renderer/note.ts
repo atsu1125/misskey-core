@@ -2,7 +2,7 @@ import { In, IsNull } from 'typeorm';
 import config from '@/config/index.js';
 import { Note, IMentionedRemoteUsers } from '@/models/entities/note.js';
 import { DriveFile } from '@/models/entities/drive-file.js';
-import { DriveFiles, Notes, Users, Emojis, Polls } from '@/models/index.js';
+import { DriveFiles, Notes, Users, Emojis, Polls, UserProfiles } from '@/models/index.js';
 import { Emoji } from '@/models/entities/emoji.js';
 import { Poll } from '@/models/entities/poll.js';
 import toHtml from '../misc/get-note-html.js';
@@ -97,6 +97,12 @@ export default async function renderNote(note: Note, dive = true, isTalk = false
 		text: apText,
 	}));
 
+	const profile = note.userId ? await UserProfiles.findOneBy({ userId: note.userId }) : null;
+	const userLang = profile.lang ? profile.lang.replace(/-/g, '') : 'en';
+	const contentMap = {
+	  [userLang]: content,
+	};
+
 	const emojis = await getEmojis(note.emojis);
 	const apemojis = emojis.map(emoji => renderEmoji(emoji));
 
@@ -128,6 +134,7 @@ export default async function renderNote(note: Note, dive = true, isTalk = false
 		attributedTo,
 		summary,
 		content,
+		contentMap,
 		source: {
 			content: text,
 			mediaType: "text/x.misskeymarkdown",
