@@ -29,6 +29,9 @@
 		<FormSwitch v-model="emailNotification_receiveFollowRequest" class="_formBlock">
 			{{ i18n.ts._notification._types.receiveFollowRequest }}
 		</FormSwitch>
+		<FormSwitch v-model="emailNotification_app" class="_formBlock">
+			{{ i18n.ts._notification._types.app }}
+		</FormSwitch>
 	</FormSection>
 </div>
 </template>
@@ -68,6 +71,7 @@ const emailNotification_mention = ref($i!.emailNotificationTypes.includes('menti
 const emailNotification_reply = ref($i!.emailNotificationTypes.includes('reply'));
 const emailNotification_follow = ref($i!.emailNotificationTypes.includes('follow'));
 const emailNotification_receiveFollowRequest = ref($i!.emailNotificationTypes.includes('receiveFollowRequest'));
+const emailNotification_app = ref($i!.emailNotificationTypes.includes('app'));
 
 const saveNotificationSettings = () => {
 	os.api('i/update', {
@@ -76,11 +80,12 @@ const saveNotificationSettings = () => {
 			...[emailNotification_reply.value ? 'reply' : null],
 			...[emailNotification_follow.value ? 'follow' : null],
 			...[emailNotification_receiveFollowRequest.value ? 'receiveFollowRequest' : null],
+			...[emailNotification_app.value ? 'app' : null],
 		].filter(x => x != null),
 	});
 };
 
-watch([emailNotification_mention, emailNotification_reply, emailNotification_follow, emailNotification_receiveFollowRequest], () => {
+watch([emailNotification_mention, emailNotification_reply, emailNotification_follow, emailNotification_receiveFollowRequest, emailNotification_app], () => {
 	saveNotificationSettings();
 });
 
