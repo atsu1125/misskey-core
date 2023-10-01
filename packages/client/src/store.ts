@@ -247,7 +247,6 @@ export const defaultStore = markRaw(new Storage('base', {
 		where: 'device',
 		default: false,
 	},
-
 	enableMTL: {
 		where: 'device',
 		default: true,
@@ -259,18 +258,6 @@ export const defaultStore = markRaw(new Storage('base', {
 	enableGTL: {
 		where: 'device',
 		default: true,
-	},
-	enableBotLoggedinWarning: {
-		where: 'device',
-		default: true
-	},
-	enableMfm: {
-		where: 'device',
-		default: true
-	},
-	enableAdminLoggedinWarning: {
-		where: 'device',
-		default: false
 	},
 	enableSudo: {
 		where: 'device',
