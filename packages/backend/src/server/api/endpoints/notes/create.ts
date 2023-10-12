@@ -77,6 +77,12 @@ export const meta = {
 			code: 'ACCESS_DENIED',
 			id: 'fe8d7103-0ea8-4ec3-814d-f8b401dc69e9',
 		},
+		
+		cannotRenoteDueToVisibility: {
+			message: 'You can not Renote due to target visibility.',
+			code: 'CANNOT_RENOTE_DUE_TO_VISIBILITY',
+			id: 'be9529e9-fe72-4de0-ae43-0b363c4938af',
+		},
 	},
 } as const;
 
@@ -200,6 +206,15 @@ export default define(meta, paramDef, async (ps, user) => {
 			if (block) {
 				throw new ApiError(meta.errors.youHaveBeenBlocked);
 			}
+		}
+
+		// Renote visibility Check
+		if (renote.visibility === 'followers' && renote.userId !== user.id) {
+			// 他人のfollowers noteはreject
+			throw new ApiError(meta.errors.cannotRenoteDueToVisibility);
+		} else if (renote.visibility === 'specified') {
+			// specified / direct noteはreject
+			throw new ApiError(meta.errors.cannotRenoteDueToVisibility);
 		}
 	}
 
