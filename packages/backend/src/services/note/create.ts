@@ -161,6 +161,19 @@ export default async (user: { id: User['id']; username: User['username']; host: 
 				// specified / direct noteはreject
 				throw new Error('Renote target is not public or home');
 		}
+
+		// Check blocking
+		if (data.renote.userHost === null) {
+			if (data.renote.userId !== user.id) {
+				const block = await Blockings.findOneBy({
+					blockerId: data.renote.userId,
+					blockeeId: user.id,
+				});
+				if (block) {
+					throw new Error('blocked');
+				}
+			}
+		}
 	}
 
 	// Quoteなら作成できないように
