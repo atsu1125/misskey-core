@@ -137,6 +137,13 @@ export default async (user: { id: User['id']; username: User['username']; host: 
 		data.visibility = 'home';
 	}
 
+	// Quoteなら作成できないように
+	if (data.renote && !(data.text == null && data.poll == null && (data.files == null || data.files.length === 0))) {
+		data.text = null;
+		data.poll = null;
+		data.files = null;
+	}
+
 	// Renote Visibility Check
 	if (data.renote) {
 		switch (data.renote.visibility) {
@@ -174,11 +181,6 @@ export default async (user: { id: User['id']; username: User['username']; host: 
 				}
 			}
 		}
-	}
-
-	// Quoteなら作成できないように
-	if (data.renote && data.text != null) {
-		data.text = null;
 	}
 
 	// 返信対象がpublicではないならhomeにする
