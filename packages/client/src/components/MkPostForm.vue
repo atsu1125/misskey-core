@@ -422,22 +422,6 @@ async function onPaste(ev: ClipboardEvent) {
 	}
 
 	const paste = ev.clipboardData.getData('text');
-
-	if (!props.renote && !quoteId && paste.startsWith(url + '/notes/')) {
-		ev.preventDefault();
-
-		os.confirm({
-			type: 'info',
-			text: i18n.ts.quoteQuestion,
-		}).then(({ canceled }) => {
-			if (canceled) {
-				insertTextAtCursor(textareaEl, paste);
-				return;
-			}
-
-			quoteId = paste.substr(url.length).match(/^\/notes\/(.+?)\/?$/)[1];
-		});
-	}
 }
 
 function onDragover(ev) {
