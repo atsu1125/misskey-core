@@ -6,7 +6,7 @@ import { isUserRelated } from '@/misc/is-user-related.js';
 import { Packed } from '@/misc/schema.js';
 
 export default class extends Channel {
-	public readonly chName = 'localTimeline';
+	public readonly chName = 'mediaTimeline';
 	public static shouldShare = true;
 	public static requireCredential = false;
 
