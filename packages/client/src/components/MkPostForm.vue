@@ -242,6 +242,10 @@ if (props.reply && props.reply.text != null) {
 	}
 }
 
+if ($i && $i.isSilenced && visibility === 'public') {
+	visibility = 'home';
+}
+
 // 公開以外へのリプライ時は元の公開範囲を引き継ぐ
 if (props.reply && ['home', 'followers', 'specified'].includes(props.reply.visibility)) {
 	visibility = props.reply.visibility;
@@ -363,12 +367,16 @@ function upload(file: File, name?: string) {
 function setVisibility() {
 	os.popup(defineAsyncComponent(() => import('@/components/MkVisibilityPicker.vue')), {
 		currentVisibility: visibility,
+		isSilenced: $i?.isSilenced,
 		src: visibilityButton,
 	}, {
 		changeVisibility: v => {
 			visibility = v;
 			if (defaultStore.state.rememberNoteVisibility) {
 				defaultStore.set('visibility', visibility);
+			}
+			if ($i && $i.isSilenced && visibility === 'public') {
+				visibility = 'home';
 			}
 		},
 	}, 'closed');
