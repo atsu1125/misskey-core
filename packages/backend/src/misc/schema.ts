@@ -23,7 +23,6 @@ import { packedPageSchema } from '@/models/schema/page.js';
 import { packedUserGroupSchema } from '@/models/schema/user-group.js';
 import { packedNoteFavoriteSchema } from '@/models/schema/note-favorite.js';
 import { packedChannelSchema } from '@/models/schema/channel.js';
-import { packedAntennaSchema } from '@/models/schema/antenna.js';
 import { packedClipSchema } from '@/models/schema/clip.js';
 import { packedFederationInstanceSchema } from '@/models/schema/federation-instance.js';
 import { packedQueueCountSchema } from '@/models/schema/queue.js';
@@ -56,7 +55,6 @@ export const refs = {
 	Page: packedPageSchema,
 	Channel: packedChannelSchema,
 	QueueCount: packedQueueCountSchema,
-	Antenna: packedAntennaSchema,
 	Clip: packedClipSchema,
 	FederationInstance: packedFederationInstanceSchema,
 	GalleryPost: packedGalleryPostSchema,
@@ -130,13 +128,13 @@ type NullOrUndefined<p extends Schema, T> =
 	| T;
 
 // https://stackoverflow.com/questions/54938141/typescript-convert-union-to-intersection
-// Get intersection from union 
+// Get intersection from union
 type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;
 
 // https://github.com/misskey-dev/misskey/pull/8144#discussion_r785287552
 // To get union, we use `Foo extends any ? Hoge<Foo> : never`
 type UnionSchemaType<a extends readonly any[], X extends Schema = a[number]> = X extends any ? SchemaType<X> : never;
-type ArrayUnion<T> = T extends any ? Array<T> : never; 
+type ArrayUnion<T> = T extends any ? Array<T> : never;
 
 export type SchemaTypeDef<p extends Schema> =
 	p['type'] extends 'null' ? null :

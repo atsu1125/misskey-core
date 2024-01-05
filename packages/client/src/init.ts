@@ -407,15 +407,6 @@ import { getAccountFromId } from '@/scripts/get-account-from-id';
 			sound.play('chatBg');
 		});
 
-		main.on('readAllAntennas', () => {
-			updateAccount({ hasUnreadAntenna: false });
-		});
-
-		main.on('unreadAntenna', () => {
-			updateAccount({ hasUnreadAntenna: true });
-			sound.play('antenna');
-		});
-
 		main.on('readAllAnnouncements', () => {
 			updateAccount({ hasUnreadAnnouncement: false });
 		});

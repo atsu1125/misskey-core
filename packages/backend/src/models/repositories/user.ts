@@ -5,12 +5,11 @@ import config from '@/config/index.js';
 import { Packed } from '@/misc/schema.js';
 import { awaitAll, Promiseable } from '@/prelude/await-all.js';
 import { populateEmojis } from '@/misc/populate-emojis.js';
-import { getAntennas } from '@/misc/antenna-cache.js';
 import { USER_ACTIVE_THRESHOLD, USER_ONLINE_THRESHOLD } from '@/const.js';
 import { Cache } from '@/misc/cache.js';
 import { db } from '@/db/postgre.js';
 import { Instance } from '../entities/instance.js';
-import { Notes, NoteUnreads, FollowRequests, Notifications, MessagingMessages, UserNotePinings, Followings, Blockings, Mutings, UserProfiles, UserSecurityKeys, UserGroupJoinings, Pages, Announcements, AnnouncementReads, Antennas, AntennaNotes, ChannelFollowings, Instances, DriveFiles } from '../index.js';
+import { Notes, NoteUnreads, FollowRequests, Notifications, MessagingMessages, UserNotePinings, Followings, Blockings, Mutings, UserProfiles, UserSecurityKeys, UserGroupJoinings, Pages, Announcements, AnnouncementReads, ChannelFollowings, Instances, DriveFiles } from '../index.js';
 import { sanitizeUrl } from '@/misc/sanitize-url.js';
 
 const userInstanceCache = new Cache<Instance | null>(1000 * 60 * 60 * 3);
@@ -155,17 +154,6 @@ export const UserRepository = db.getRepository(User).extend({
 		} : {});
 
 		return count > 0;
-	},
-
-	async getHasUnreadAntenna(userId: User['id']): Promise<boolean> {
-		const myAntennas = (await getAntennas()).filter(a => a.userId === userId);
-
-		const unread = myAntennas.length > 0 ? await AntennaNotes.findOneBy({
-			antennaId: In(myAntennas.map(x => x.id)),
-			read: false,
-		}) : null;
-
-		return unread != null;
 	},
 
 	async getHasUnreadChannel(userId: User['id']): Promise<boolean> {
@@ -378,7 +366,6 @@ export const UserRepository = db.getRepository(User).extend({
 					take: 1,
 				}).then(count => count > 0),
 				hasUnreadAnnouncement: this.getHasUnreadAnnouncement(user.id),
-				hasUnreadAntenna: this.getHasUnreadAntenna(user.id),
 				hasUnreadChannel: this.getHasUnreadChannel(user.id),
 				hasUnreadMessagingMessage: this.getHasUnreadMessagingMessage(user.id),
 				hasUnreadNotification: this.getHasUnreadNotification(user.id),

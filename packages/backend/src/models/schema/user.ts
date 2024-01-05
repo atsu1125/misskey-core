@@ -332,10 +332,6 @@ export const packedMeDetailedOnlySchema = {
 			type: 'boolean',
 			nullable: false, optional: false,
 		},
-		hasUnreadAntenna: {
-			type: 'boolean',
-			nullable: false, optional: false,
-		},
 		hasUnreadChannel: {
 			type: 'boolean',
 			nullable: false, optional: false,

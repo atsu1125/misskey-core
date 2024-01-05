@@ -4,7 +4,6 @@ import { Channel } from '@/models/entities/channel.js';
 import { User } from '@/models/entities/user.js';
 import { UserProfile } from '@/models/entities/user-profile.js';
 import { Note } from '@/models/entities/note.js';
-import { Antenna } from '@/models/entities/antenna.js';
 import { DriveFile } from '@/models/entities/drive-file.js';
 import { DriveFolder } from '@/models/entities/drive-folder.js';
 import { Emoji } from '@/models/entities/emoji.js';
@@ -27,9 +26,6 @@ export interface InternalStreamTypes {
 	webhookCreated: Webhook;
 	webhookDeleted: Webhook;
 	webhookUpdated: Webhook;
-	antennaCreated: Antenna;
-	antennaDeleted: Antenna;
-	antennaUpdated: Antenna;
 }
 
 export interface BroadcastTypes {
@@ -81,8 +77,6 @@ export interface MainStreamTypes {
 	readAllMessagingMessages: undefined;
 	messagingMessage: Packed<'MessagingMessage'>;
 	unreadMessagingMessage: Packed<'MessagingMessage'>;
-	readAllAntennas: undefined;
-	unreadAntenna: Antenna;
 	readAllAnnouncements: undefined;
 	readAllChannels: undefined;
 	unreadChannel: Note['id'];
@@ -94,7 +88,6 @@ export interface MainStreamTypes {
 		value: any | null;
 	};
 	driveFileCreated: Packed<'DriveFile'>;
-	readAntenna: Antenna;
 	receiveFollowRequest: Packed<'User'>;
 }
 
@@ -142,10 +135,6 @@ export interface ChannelStreamTypes {
 export interface UserListStreamTypes {
 	userAdded: Packed<'User'>;
 	userRemoved: Packed<'User'>;
-}
-
-export interface AntennaStreamTypes {
-	note: Note;
 }
 
 export interface MessagingStreamTypes {
@@ -222,10 +211,6 @@ export type StreamMessages = {
 	userList: {
 		name: `userListStream:${UserList['id']}`;
 		payload: EventUnionFromDictionary<UserListStreamTypes>;
-	};
-	antenna: {
-		name: `antennaStream:${Antenna['id']}`;
-		payload: EventUnionFromDictionary<AntennaStreamTypes>;
 	};
 	messaging: {
 		name: `messagingStream:${User['id']}-${User['id']}`;

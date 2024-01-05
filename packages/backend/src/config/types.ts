@@ -66,7 +66,6 @@ export type Source = {
 
 	signToActivityPubGet?: boolean;
 
-	disableAntenna?: boolean;
 	disableSearch?: boolean;
 };
 
