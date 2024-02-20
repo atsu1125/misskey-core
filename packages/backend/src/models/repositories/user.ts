@@ -194,6 +194,8 @@ export const UserRepository = db.getRepository(User).extend({
 	},
 
 	getOnlineStatus(user: User): 'unknown' | 'online' | 'active' | 'offline' {
+		return 'unknown';
+		//disabled
 		if (user.hideOnlineStatus) return 'unknown';
 		if (user.lastActiveDate == null) return 'unknown';
 		const elapsed = Date.now() - user.lastActiveDate.getTime();
