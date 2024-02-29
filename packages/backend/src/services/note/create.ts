@@ -586,6 +586,14 @@ function index(note: Note) {
 
 async function createMentionedEvents(mentionedUsers: MinimumUser[], note: Note, nm: NotificationManager) {
 	for (const u of mentionedUsers.filter(u => Users.isLocalUser(u))) {
+		const isWordMuted = await MutedNotes.findOneBy({
+			userId: u.id,
+			noteId: note.id,
+		});
+		if (isWordMuted) {
+			continue;
+		}
+
 		const threadMuted = await NoteThreadMutings.findOneBy({
 			userId: u.id,
 			threadId: note.threadId || note.id,
