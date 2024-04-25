@@ -519,6 +519,31 @@ const activitystreams = {
 	},
 };
 
+export const WellKnownContext = {
+	"@context": [
+		"https://www.w3.org/ns/activitystreams",
+		"https://w3id.org/security/v1",
+		{
+			// as non-standards
+			manuallyApprovesFollowers: "as:manuallyApprovesFollowers",
+			sensitive: "as:sensitive",
+			Hashtag: "as:Hashtag",
+			// Mastodon
+			toot: "http://joinmastodon.org/ns#",
+			Emoji: "toot:Emoji",
+			featured: "toot:featured",
+			discoverable: "toot:discoverable",
+			// schema
+			schema: "http://schema.org#",
+			PropertyValue: "schema:PropertyValue",
+			value: "schema:value",
+			// Misskey
+			misskey: "https://misskey-hub.net/ns#",
+			_misskey_votes: "misskey:_misskey_votes",
+		},
+	],
+};
+
 export const CONTEXTS: Record<string, unknown> = {
 	'https://w3id.org/identity/v1': id_v1,
 	'https://w3id.org/security/v1': security_v1,

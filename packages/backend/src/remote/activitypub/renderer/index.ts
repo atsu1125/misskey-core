@@ -4,6 +4,7 @@ import { IActivity } from '../type.js';
 import { LdSignature } from '../misc/ld-signature.js';
 import { getUserKeypair } from '@/misc/keypair-store.js';
 import { User } from '@/models/entities/user.js';
+import { WellKnownContext } from '@/remote/activitypub/misc/contexts.js';
 
 export const renderActivity = (x: any): IActivity | null => {
 	if (x == null) return null;
@@ -12,30 +13,7 @@ export const renderActivity = (x: any): IActivity | null => {
 		x.id = `${config.url}/${uuid()}`;
 	}
 
-	return Object.assign({
-		'@context': [
-			'https://www.w3.org/ns/activitystreams',
-			'https://w3id.org/security/v1',
-			{
-				// as non-standards
-				manuallyApprovesFollowers: 'as:manuallyApprovesFollowers',
-				sensitive: 'as:sensitive',
-				Hashtag: 'as:Hashtag',
-				// Mastodon
-				toot: 'http://joinmastodon.org/ns#',
-				Emoji: 'toot:Emoji',
-				featured: 'toot:featured',
-				discoverable: 'toot:discoverable',
-				// schema
-				schema: 'http://schema.org#',
-				PropertyValue: 'schema:PropertyValue',
-				value: 'schema:value',
-				// Misskey
-				misskey: 'https://misskey-hub.net/ns#',
-				'_misskey_votes': 'misskey:_misskey_votes',
-			},
-		],
-	}, x);
+	return Object.assign({}, WellKnownContext, x);
 };
 
 export const attachLdSignature = async (activity: any, user: { id: User['id']; host: null; }): Promise<IActivity | null> => {
