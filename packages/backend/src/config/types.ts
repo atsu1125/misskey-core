@@ -67,6 +67,8 @@ export type Source = {
 	signToActivityPubGet?: boolean;
 
 	disableSearch?: boolean;
+	chartCommitIntervalSecond?: number;
+	disableChartsForRemoteUser?: boolean;
 };
 
 /**
