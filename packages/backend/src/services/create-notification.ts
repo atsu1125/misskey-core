@@ -79,11 +79,13 @@ export async function createNotification(
 
 		if (type === 'reply') {
 			const note = await Notes.findOneByOrFail({ id: data.noteId });
-			sendEmailNotification.reply(notifieeId, await Users.findOneByOrFail({ id: data.notifierId }), note.text);
+			const noteUrl = `${config.url}/notes/${note.id}`;
+			sendEmailNotification.reply(notifieeId, await Users.findOneByOrFail({ id: data.notifierId }), note.text, noteUrl);
 		}
 		if (type === 'mention') {
 			const note = await Notes.findOneByOrFail({ id: data.noteId });
-			sendEmailNotification.mention(notifieeId, await Users.findOneByOrFail({ id: data.notifierId }), note.text);
+			const noteUrl = `${config.url}/notes/${note.id}`;
+			sendEmailNotification.mention(notifieeId, await Users.findOneByOrFail({ id: data.notifierId }), note.text, noteUrl);
 		}
 		if (type === 'app') sendEmailNotification.app(notifieeId, data.customHeader, data.customBody);
 		if (type === 'follow') sendEmailNotification.follow(notifieeId, await Users.findOneByOrFail({ id: data.notifierId }));
