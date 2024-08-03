@@ -7,6 +7,7 @@ import { doPostSuspend } from '@/services/suspend-user.js';
 import { publishUserEvent } from '@/services/stream.js';
 import { Not, IsNull } from 'typeorm';
 import { rejectFollowRequest } from '@/services/following/reject.js';
+import { publishInternalEvent } from '@/services/stream.js';
 
 export const meta = {
 	tags: ['admin'],
@@ -59,6 +60,7 @@ export default define(meta, paramDef, async (ps, me) => {
 			await removeRemoteToLocalFollowAll(user).catch(e => {});
 			await doPostSuspend(user).catch(e => {});
 		}
+		await publishInternalEvent('userChangeSuspendedState', { id: user.id, isSuspended: true }).catch(e => {});
 		await unFollowAll(user).catch(e => {});
 		await readAllNotify(user).catch(e => {});
 	})();
