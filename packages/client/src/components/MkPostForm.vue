@@ -498,6 +498,7 @@ function saveDraft() {
 			visibility: visibility,
 			files: files,
 			poll: poll,
+			visibleUserIds: visibility === 'specified' ? visibleUsers.map(x => x.id) : undefined,
 		},
 	};
 
@@ -637,6 +638,12 @@ onMounted(() => {
 				if (draft.data.poll) {
 					poll = draft.data.poll;
 				}
+				if (draft.data.visibleUserIds) {
+					os.api('users/show', { userIds: draft.data.visibleUserIds }).then(users => {
+						users.forEach(u => pushVisibleUser(u));
+					});
+				}
+				quoteId = draft.data.quoteId;
 			}
 		}
 
@@ -656,7 +663,11 @@ onMounted(() => {
 				};
 			}
 			visibility = init.visibility;
-			quoteId = init.renote ? init.renote.id : null;
+			if (init.visibleUserIds) {
+				os.api('users/show', { userIds: init.visibleUserIds }).then(users => {
+					users.forEach(u => pushVisibleUser(u));
+				});
+			}
 		}
 
 		nextTick(() => watchForDraft());
