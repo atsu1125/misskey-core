@@ -4,10 +4,9 @@ import { Users, Followings, Notifications, FollowRequests } from '@/models/index
 import { User } from '@/models/entities/user.js';
 import { insertModerationLog } from '@/services/insert-moderation-log.js';
 import { doPostSuspend } from '@/services/suspend-user.js';
-import { publishUserEvent } from '@/services/stream.js';
+import { publishUserEvent, publishInternalEvent } from '@/services/stream.js';
 import { Not, IsNull } from 'typeorm';
 import { rejectFollowRequest } from '@/services/following/reject.js';
-import { publishInternalEvent } from '@/services/stream.js';
 
 export const meta = {
 	tags: ['admin'],
@@ -54,13 +53,14 @@ export default define(meta, paramDef, async (ps, me) => {
 		publishUserEvent(user.id, 'terminate', {});
 	}
 
+	publishInternalEvent('userChangeSuspendedState', { id: user.id, isSuspended: true });
+
 	(async () => {
 		if (ps.isDelete) {
 			await removeLocalToRemoteFollowAll(user).catch(e => {});
 			await removeRemoteToLocalFollowAll(user).catch(e => {});
 			await doPostSuspend(user).catch(e => {});
 		}
-		await publishInternalEvent('userChangeSuspendedState', { id: user.id, isSuspended: true }).catch(e => {});
 		await unFollowAll(user).catch(e => {});
 		await readAllNotify(user).catch(e => {});
 	})();
