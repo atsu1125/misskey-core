@@ -53,6 +53,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue';
+import XHeader from './_header_.vue';
 import MkButton from '@/components/MkButton.vue';
 import MkInput from '@/components/form/input.vue';
 import MkSelect from '@/components/form/select.vue';
