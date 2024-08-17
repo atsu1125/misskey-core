@@ -37,12 +37,6 @@ export const meta = {
 			id: 'f449b209-0c60-4e51-84d5-29486263bfd4',
 		},
 
-		inappropriate: {
-			message: 'Cannot upload the file because it has been determined that it possibly contains inappropriate content.',
-			code: 'INAPPROPRIATE',
-			id: 'bec5bd69-fba3-43c9-b4fb-2894b66ad5d2',
-		},
-
 		noFreeSpace: {
 			message: 'Cannot upload the file because you have no free space of drive.',
 			code: 'NO_FREE_SPACE',
@@ -101,7 +95,6 @@ export default define(meta, paramDef, async (ps, user, _, file, cleanup, ip, hea
 			apiLogger.error(e);
 		}
 		if (e instanceof IdentifiableError) {
-			if (e.id === '282f77bf-5816-4f72-9264-aa14d8261a21') throw new ApiError(meta.errors.inappropriate);
 			if (e.id === 'c6244ed2-a39a-4e1c-bf93-f0fbd7764fa6') throw new ApiError(meta.errors.noFreeSpace);
 		}
 		throw new ApiError();

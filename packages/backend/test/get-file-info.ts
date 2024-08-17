@@ -10,7 +10,7 @@ const _dirname = dirname(_filename);
 describe('Get file info', () => {
 	it('Empty file', async (async () => {
 		const path = `${_dirname}/resources/emptyfile`;
-		const info = await getFileInfo(path, { skipSensitiveDetection: true }) as any;
+		const info = await getFileInfo(path) as any;
 		delete info.warnings;
 		delete info.blurhash;
 		delete info.sensitive;
@@ -30,7 +30,7 @@ describe('Get file info', () => {
 
 	it('Generic JPEG', async (async () => {
 		const path = `${_dirname}/resources/Lenna.jpg`;
-		const info = await getFileInfo(path, { skipSensitiveDetection: true }) as any;
+		const info = await getFileInfo(path) as any;
 		delete info.warnings;
 		delete info.blurhash;
 		delete info.sensitive;
@@ -50,7 +50,7 @@ describe('Get file info', () => {
 
 	it('Generic APNG', async (async () => {
 		const path = `${_dirname}/resources/anime.png`;
-		const info = await getFileInfo(path, { skipSensitiveDetection: true }) as any;
+		const info = await getFileInfo(path) as any;
 		delete info.warnings;
 		delete info.blurhash;
 		delete info.sensitive;
@@ -70,7 +70,7 @@ describe('Get file info', () => {
 
 	it('Generic AGIF', async (async () => {
 		const path = `${_dirname}/resources/anime.gif`;
-		const info = await getFileInfo(path, { skipSensitiveDetection: true }) as any;
+		const info = await getFileInfo(path) as any;
 		delete info.warnings;
 		delete info.blurhash;
 		delete info.sensitive;
@@ -90,7 +90,7 @@ describe('Get file info', () => {
 
 	it('PNG with alpha', async (async () => {
 		const path = `${_dirname}/resources/with-alpha.png`;
-		const info = await getFileInfo(path, { skipSensitiveDetection: true }) as any;
+		const info = await getFileInfo(path) as any;
 		delete info.warnings;
 		delete info.blurhash;
 		delete info.sensitive;
@@ -110,7 +110,7 @@ describe('Get file info', () => {
 
 	it('Generic SVG', async (async () => {
 		const path = `${_dirname}/resources/image.svg`;
-		const info = await getFileInfo(path, { skipSensitiveDetection: true }) as any;
+		const info = await getFileInfo(path) as any;
 		delete info.warnings;
 		delete info.blurhash;
 		delete info.sensitive;
@@ -131,7 +131,7 @@ describe('Get file info', () => {
 	it('SVG with XML definition', async (async () => {
 		// https://github.com/misskey-dev/misskey/issues/4413
 		const path = `${_dirname}/resources/with-xml-def.svg`;
-		const info = await getFileInfo(path, { skipSensitiveDetection: true }) as any;
+		const info = await getFileInfo(path) as any;
 		delete info.warnings;
 		delete info.blurhash;
 		delete info.sensitive;
@@ -151,7 +151,7 @@ describe('Get file info', () => {
 
 	it('Dimension limit', async (async () => {
 		const path = `${_dirname}/resources/25000x25000.png`;
-		const info = await getFileInfo(path, { skipSensitiveDetection: true }) as any;
+		const info = await getFileInfo(path) as any;
 		delete info.warnings;
 		delete info.blurhash;
 		delete info.sensitive;
@@ -171,7 +171,7 @@ describe('Get file info', () => {
 
 	it('Rotate JPEG', async (async () => {
 		const path = `${_dirname}/resources/rotate.jpg`;
-		const info = await getFileInfo(path, { skipSensitiveDetection: true }) as any;
+		const info = await getFileInfo(path) as any;
 		delete info.warnings;
 		delete info.blurhash;
 		delete info.sensitive;
