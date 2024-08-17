@@ -8,7 +8,6 @@ import Logger from '../logger.js';
 import { registerOrFetchInstanceDoc } from '../register-or-fetch-instance-doc.js';
 import { User } from '@/models/entities/user.js';
 import { Followings, Users, Instances } from '@/models/index.js';
-import { instanceChart, perUserFollowingChart } from '@/services/chart/index.js';
 import { getActiveWebhooks } from '@/misc/webhook-cache.js';
 
 const logger = new Logger('following/delete');
@@ -69,15 +68,12 @@ export async function decrementFollowing(follower: { id: User['id']; host: User[
 	if (Users.isRemoteUser(follower) && Users.isLocalUser(followee)) {
 		registerOrFetchInstanceDoc(follower.host).then(i => {
 			Instances.decrement({ id: i.id }, 'followingCount', 1);
-			instanceChart.updateFollowing(i.host, false);
 		});
 	} else if (Users.isLocalUser(follower) && Users.isRemoteUser(followee)) {
 		registerOrFetchInstanceDoc(followee.host).then(i => {
 			Instances.decrement({ id: i.id }, 'followersCount', 1);
-			instanceChart.updateFollowers(i.host, false);
 		});
 	}
 	//#endregion
 
-	perUserFollowingChart.update(follower, followee, false);
 }

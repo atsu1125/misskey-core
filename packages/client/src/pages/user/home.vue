@@ -85,7 +85,6 @@
 				<MkInfo v-else-if="$i && $i.id === user.id">{{ i18n.ts.userPagePinTip }}</MkInfo>
 				<template v-if="narrow">
 					<XPhotos :key="user.id" :user="user"/>
-					<XActivity :key="user.id" :user="user" style="margin-top: var(--margin);"/>
 				</template>
 			</div>
 			<div>
@@ -124,7 +123,6 @@ import { getStaticImageUrl } from '@/scripts/get-static-image-url';
 import { defaultStore } from '@/store.js';
 
 const XPhotos = defineAsyncComponent(() => import('./index.photos.vue'));
-const XActivity = defineAsyncComponent(() => import('./index.activity.vue'));
 
 const props = withDefaults(defineProps<{
 	user: misskey.entities.UserDetailed;

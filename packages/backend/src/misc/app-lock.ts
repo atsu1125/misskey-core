@@ -25,7 +25,3 @@ export function getApLock(uri: string, timeout = 30 * 1000) {
 export function getFetchInstanceMetadataLock(host: string, timeout = 30 * 1000) {
 	return lock(`instance:${host}`, timeout);
 }
-
-export function getChartInsertLock(lockKey: string, timeout = 30 * 1000) {
-	return lock(`chart-insert:${lockKey}`, timeout);
-}

@@ -10,7 +10,6 @@ import Logger from '../logger.js';
 import { IdentifiableError } from '@/misc/identifiable-error.js';
 import { User } from '@/models/entities/user.js';
 import { Followings, Users, FollowRequests, Blockings, Instances, UserProfiles } from '@/models/index.js';
-import { instanceChart, perUserFollowingChart } from '@/services/chart/index.js';
 import { genId } from '@/misc/gen-id.js';
 import { createNotification } from '../create-notification.js';
 import { isDuplicateKeyValueError } from '@/misc/is-duplicate-key-value-error.js';
@@ -72,17 +71,13 @@ export async function insertFollowingDoc(followee: { id: User['id']; host: User[
 	if (Users.isRemoteUser(follower) && Users.isLocalUser(followee)) {
 		registerOrFetchInstanceDoc(follower.host).then(i => {
 			Instances.increment({ id: i.id }, 'followingCount', 1);
-			instanceChart.updateFollowing(i.host, true);
 		});
 	} else if (Users.isLocalUser(follower) && Users.isRemoteUser(followee)) {
 		registerOrFetchInstanceDoc(followee.host).then(i => {
 			Instances.increment({ id: i.id }, 'followersCount', 1);
-			instanceChart.updateFollowers(i.host, true);
 		});
 	}
 	//#endregion
-
-	perUserFollowingChart.update(follower, followee, true);
 
 	// Publish follow event
 	if (Users.isLocalUser(follower)) {

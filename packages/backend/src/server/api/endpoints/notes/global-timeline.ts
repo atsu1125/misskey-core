@@ -1,6 +1,5 @@
 import { fetchMeta } from '@/misc/fetch-meta.js';
 import { Notes } from '@/models/index.js';
-import { activeUsersChart } from '@/services/chart/index.js';
 import define from '../../define.js';
 import { ApiError } from '../../error.js';
 import { makePaginationQuery } from '../../common/make-pagination-query.js';
@@ -86,12 +85,6 @@ export default define(meta, paramDef, async (ps, user) => {
 	//#endregion
 
 	const timeline = await query.take(ps.limit).getMany();
-
-	process.nextTick(() => {
-		if (user) {
-			activeUsersChart.read(user);
-		}
-	});
 
 	return await Notes.packMany(timeline, user);
 });

@@ -7,7 +7,6 @@ import { User, IRemoteUser } from '@/models/entities/user.js';
 import { Note } from '@/models/entities/note.js';
 import { NoteReactions, Users, NoteWatchings, Notes, Emojis, Blockings } from '@/models/index.js';
 import { IsNull, Not } from 'typeorm';
-import { perUserReactionsChart } from '@/services/chart/index.js';
 import { genId } from '@/misc/gen-id.js';
 import { createNotification } from '../../create-notification.js';
 import deleteReaction from './delete.js';
@@ -76,10 +75,6 @@ export default async (user: { id: User['id']; host: User['host']; }, note: Note,
 		})
 		.where('id = :id', { id: note.id })
 		.execute();
-
-	if (!config.disableChartsForRemoteUser || (user.host == null)) {
-		perUserReactionsChart.update(user, note);
-	}
 
 	// カスタム絵文字リアクションだったら絵文字情報も送る
 	const decodedReaction = decodeReaction(reaction);

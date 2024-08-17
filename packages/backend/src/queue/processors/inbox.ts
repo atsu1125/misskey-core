@@ -5,7 +5,6 @@ import perform from '@/remote/activitypub/perform.js';
 import Logger from '@/services/logger.js';
 import { registerOrFetchInstanceDoc } from '@/services/register-or-fetch-instance-doc.js';
 import { Instances } from '@/models/index.js';
-import { apRequestChart, federationChart, instanceChart } from '@/services/chart/index.js';
 import { fetchMeta } from '@/misc/fetch-meta.js';
 import { toPuny, extractDbHost } from '@/misc/convert-host.js';
 import { getApId } from '@/remote/activitypub/type.js';
@@ -155,10 +154,6 @@ export default async (job: Bull.Job<InboxJobData>): Promise<string> => {
 		// 配送を停止していてもアクティビティ受信したら配送再開する
 
 		fetchInstanceMetadata(i);
-
-		instanceChart.requestReceived(i.host);
-		apRequestChart.inbox();
-		federationChart.inbox(i.host);
 	});
 
 	// アクティビティを処理

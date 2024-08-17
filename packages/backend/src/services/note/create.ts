@@ -22,7 +22,6 @@ import { App } from '@/models/entities/app.js';
 import { Not, In } from 'typeorm';
 import { User, ILocalUser, IRemoteUser } from '@/models/entities/user.js';
 import { genId } from '@/misc/gen-id.js';
-import { notesChart, perUserNotesChart, activeUsersChart, instanceChart } from '@/services/chart/index.js';
 import { Poll, IPoll } from '@/models/entities/poll.js';
 import { createNotification } from '../create-notification.js';
 import { isDuplicateKeyValueError } from '@/misc/is-duplicate-key-value-error.js';
@@ -239,17 +238,10 @@ export default async (user: { id: User['id']; username: User['username']; host: 
 
 	res(note);
 
-	// 統計を更新
-	notesChart.update(note, true);
-	if (!config.disableChartsForRemoteUser || (user.host == null)) {
-		perUserNotesChart.update(user, note, true);
-	}
-
 	// Register host
 	if (Users.isRemoteUser(user)) {
 		registerOrFetchInstanceDoc(user.host).then(i => {
 			Instances.increment({ id: i.id }, 'notesCount', 1);
-			instanceChart.updateNote(i.host, note, true);
 		});
 	}
 
@@ -314,8 +306,6 @@ export default async (user: { id: User['id']; username: User['username']; host: 
 	}
 
 	if (!silent) {
-		if (Users.isLocalUser(user)) activeUsersChart.write(user);
-
 		// 未読通知を作成
 		if (data.visibility === 'specified') {
 			if (data.visibleUsers == null) throw new Error('invalid param');

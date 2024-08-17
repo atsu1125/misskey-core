@@ -8,7 +8,6 @@ import { IsNull } from 'typeorm';
 import { genId } from '@/misc/gen-id.js';
 import { toPunyNullable } from '@/misc/convert-host.js';
 import { UserKeypair } from '@/models/entities/user-keypair.js';
-import { usersChart } from '@/services/chart/index.js';
 import { UsedUsername } from '@/models/entities/used-username.js';
 import { db } from '@/db/postgre.js';
 
@@ -107,8 +106,6 @@ export async function signup(opts: {
 			username: username.toLowerCase(),
 		}));
 	});
-
-	usersChart.update(account, true);
 
 	return { account, secret };
 }

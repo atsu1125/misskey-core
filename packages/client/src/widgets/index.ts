@@ -11,11 +11,9 @@ export default function(app: App) {
 	app.component('MkwRssTicker', defineAsyncComponent(() => import('./rss-ticker.vue')));
 	app.component('MkwTrends', defineAsyncComponent(() => import('./trends.vue')));
 	app.component('MkwClock', defineAsyncComponent(() => import('./clock.vue')));
-	app.component('MkwActivity', defineAsyncComponent(() => import('./activity.vue')));
 	app.component('MkwPhotos', defineAsyncComponent(() => import('./photos.vue')));
 	app.component('MkwDigitalClock', defineAsyncComponent(() => import('./digital-clock.vue')));
 	app.component('MkwUnixClock', defineAsyncComponent(() => import('./unix-clock.vue')));
-	app.component('MkwFederation', defineAsyncComponent(() => import('./federation.vue')));
 	app.component('MkwPostForm', defineAsyncComponent(() => import('./post-form.vue')));
 	app.component('MkwSlideshow', defineAsyncComponent(() => import('./slideshow.vue')));
 	app.component('MkwOnlineUsers', defineAsyncComponent(() => import('./online-users.vue')));
@@ -37,11 +35,9 @@ export const widgets = [
 	'rssTicker',
 	'trends',
 	'clock',
-	'activity',
 	'photos',
 	'digitalClock',
 	'unixClock',
-	'federation',
 	'instanceCloud',
 	'postForm',
 	'slideshow',
