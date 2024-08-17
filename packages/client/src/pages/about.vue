@@ -71,15 +71,6 @@
 			</FormSection>
 		</div>
 	</MkSpacer>
-	<MkSpacer v-else-if="tab === 'emojis'" :content-max="1000" :margin-min="20">
-		<XEmojis/>
-	</MkSpacer>
-	<MkSpacer v-else-if="tab === 'federation'" :content-max="1000" :margin-min="20">
-		<XFederation/>
-	</MkSpacer>
-	<MkSpacer v-else-if="tab === 'charts'" :content-max="1000" :margin-min="20">
-		<MkInstanceStats :chart-limit="500" :detailed="true"/>
-	</MkSpacer>
 	<MkSpacer v-else-if="tab === 'ads'" :content-max="1000" :margin-min="20">
 		<MkAd v-for="ad in instance.ads" :key="ad.id" :specify="ad"/>
 	</MkSpacer>
@@ -88,15 +79,12 @@
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
-import XEmojis from './about.emojis.vue';
-import XFederation from './about.federation.vue';
 import { version, instanceName , host } from '@/config';
 import FormLink from '@/components/form/link.vue';
 import FormSection from '@/components/form/section.vue';
 import FormSuspense from '@/components/form/suspense.vue';
 import FormSplit from '@/components/form/split.vue';
 import MkKeyValue from '@/components/MkKeyValue.vue';
-import MkInstanceStats from '@/components/MkInstanceStats.vue';
 import * as os from '@/os';
 import number from '@/filters/number';
 import { i18n } from '@/i18n';
@@ -128,18 +116,6 @@ const headerActions = $computed(() => []);
 const headerTabs = $computed(() => [{
 	key: 'overview',
 	title: i18n.ts.overview,
-}, {
-	key: 'emojis',
-	title: i18n.ts.customEmojis,
-	icon: 'fas fa-laugh',
-}, {
-	key: 'federation',
-	title: i18n.ts.federation,
-	icon: 'fas fa-globe',
-}, {
-	key: 'charts',
-	title: i18n.ts.charts,
-	icon: 'fas fa-chart-simple',
 }, {
 	key: 'ads',
 	title: i18n.ts.ads,

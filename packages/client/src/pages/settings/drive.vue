@@ -18,11 +18,6 @@
 	</FormSection>
 
 	<FormSection>
-		<template #label>{{ i18n.ts.statistics }}</template>
-		<MkChart src="per-user-drive" :args="{ user: $i }" span="day" :limit="7 * 5" :bar="true" :stacked="true" :detailed="false" :aspect-ratio="6"/>
-	</FormSection>
-
-	<FormSection>
 		<FormLink @click="chooseUploadFolder()">
 			{{ i18n.ts.uploadFolder }}
 			<template #suffix>{{ uploadFolder ? uploadFolder.name : '-' }}</template>
@@ -54,7 +49,6 @@ import FormSplit from '@/components/form/split.vue';
 import * as os from '@/os';
 import bytes from '@/filters/bytes';
 import { defaultStore } from '@/store';
-import MkChart from '@/components/MkChart.vue';
 import { i18n } from '@/i18n';
 import { definePageMetadata } from '@/scripts/page-metadata';
 import { $i } from '@/account';

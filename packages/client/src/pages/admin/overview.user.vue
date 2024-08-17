@@ -5,7 +5,6 @@
 		<span class="name"><MkUserName class="name" :user="user"/></span>
 		<span class="sub"><span class="acct _monospace">@{{ acct(user) }}</span></span>
 	</div>
-	<MkMiniChart v-if="chart" class="chart" :src="chart.inc"/>
 </MkA>
 </template>
 
@@ -18,12 +17,6 @@ import { acct } from '@/filters/user';
 const props = defineProps<{
 	user: misskey.entities.User;
 }>();
-
-let chart = $ref(null);
-
-os.apiGet('charts/user/notes', { userId: props.user.id, limit: 16, span: 'day' }).then(res => {
-	chart = res;
-});
 </script>
 
 <style lang="scss" module>

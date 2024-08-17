@@ -76,31 +76,6 @@
 				<FormLink :to="`https://${host}/manifest.json`" external style="margin-bottom: 8px;">manifest.json</FormLink>
 			</FormSection>
 		</div>
-		<div v-else-if="tab === 'chart'" class="_formRoot">
-			<div class="cmhjzshl">
-				<div class="selects">
-					<MkSelect v-model="chartSrc" style="margin: 0 10px 0 0; flex: 1;">
-						<option value="instance-requests">{{ i18n.ts._instanceCharts.requests }}</option>
-						<option value="instance-users">{{ i18n.ts._instanceCharts.users }}</option>
-						<option value="instance-users-total">{{ i18n.ts._instanceCharts.usersTotal }}</option>
-						<option value="instance-notes">{{ i18n.ts._instanceCharts.notes }}</option>
-						<option value="instance-notes-total">{{ i18n.ts._instanceCharts.notesTotal }}</option>
-						<option value="instance-ff">{{ i18n.ts._instanceCharts.ff }}</option>
-						<option value="instance-ff-total">{{ i18n.ts._instanceCharts.ffTotal }}</option>
-						<option value="instance-drive-usage">{{ i18n.ts._instanceCharts.cacheSize }}</option>
-						<option value="instance-drive-usage-total">{{ i18n.ts._instanceCharts.cacheSizeTotal }}</option>
-						<option value="instance-drive-files">{{ i18n.ts._instanceCharts.files }}</option>
-						<option value="instance-drive-files-total">{{ i18n.ts._instanceCharts.filesTotal }}</option>
-					</MkSelect>
-				</div>
-				<div class="charts">
-					<div class="label">{{ i18n.t('recentNHours', { n: 90 }) }}</div>
-					<MkChart class="chart" :src="chartSrc" span="hour" :limit="90" :args="{ host: host }" :detailed="true"></MkChart>
-					<div class="label">{{ i18n.t('recentNDays', { n: 90 }) }}</div>
-					<MkChart class="chart" :src="chartSrc" span="day" :limit="90" :args="{ host: host }" :detailed="true"></MkChart>
-				</div>
-			</div>
-		</div>
 		<div v-else-if="tab === 'users'" class="_formRoot">
 			<MkPagination v-slot="{items}" :pagination="usersPagination" style="display: grid; grid-template-columns: repeat(auto-fill,minmax(270px,1fr)); grid-gap: 12px;">
 				<MkA v-for="user in items" :key="user.id" v-tooltip.mfm="`Last posted: ${new Date(user.updatedAt).toLocaleString()}`" class="user" :to="`/user-info/${user.id}`">
@@ -119,14 +94,12 @@
 <script lang="ts" setup>
 import { } from 'vue';
 import * as misskey from 'misskey-js';
-import MkChart from '@/components/MkChart.vue';
 import MkObjectView from '@/components/MkObjectView.vue';
 import FormLink from '@/components/form/link.vue';
 import MkLink from '@/components/MkLink.vue';
 import MkButton from '@/components/MkButton.vue';
 import FormSection from '@/components/form/section.vue';
 import MkKeyValue from '@/components/MkKeyValue.vue';
-import MkSelect from '@/components/form/select.vue';
 import FormSwitch from '@/components/form/switch.vue';
 import * as os from '@/os';
 import number from '@/filters/number';
@@ -143,7 +116,6 @@ const props = defineProps<{
 }>();
 
 let tab = $ref('overview');
-let chartSrc = $ref('instance-requests');
 let meta = $ref<misskey.entities.DetailedInstanceMetadata | null>(null);
 let instance = $ref<misskey.entities.Instance | null>(null);
 let suspended = $ref(false);
@@ -279,10 +251,6 @@ const headerTabs = $computed(() => [{
 	key: 'overview',
 	title: i18n.ts.overview,
 	icon: 'fas fa-info-circle',
-}, {
-	key: 'chart',
-	title: i18n.ts.charts,
-	icon: 'fas fa-chart-simple',
 }, (iAmModerator && enableSudo) ? {
 	key: 'users',
 	title: i18n.ts.users,
@@ -313,20 +281,6 @@ definePageMetadata({
 
 	> .name {
 		word-break: break-all;
-	}
-}
-
-.cmhjzshl {
-	> .selects {
-		display: flex;
-		margin: 0 0 16px 0;
-	}
-
-	> .charts {
-		> .label {
-			margin-bottom: 12px;
-			font-weight: bold;
-		}
 	}
 }
 </style>

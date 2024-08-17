@@ -35,15 +35,6 @@
 				</div>
 			</div>
 		</div>
-		<div v-if="instances" class="federation">
-			<MarqueeText :duration="40">
-				<MkA v-for="instance in instances" :key="instance.id" :class="$style.federationInstance" :to="`/instance-info/${instance.host}`" behavior="window">
-					<!--<MkInstanceCardMini :instance="instance"/>-->
-					<img v-if="instance.iconUrl" class="icon" :src="instance.iconUrl" alt=""/>
-					<span class="name _monospace">{{ instance.host }}</span>
-				</MkA>
-			</MarqueeText>
-		</div>
 	</div>
 </div>
 </template>
@@ -87,13 +78,6 @@ os.api('hashtags/list', {
 	limit: 8,
 }).then(_tags => {
 	tags = _tags;
-});
-
-os.api('federation/instances', {
-	sort: '+pubSub',
-	limit: 20,
-}).then(_instances => {
-	instances = _instances;
 });
 
 function signin() {
