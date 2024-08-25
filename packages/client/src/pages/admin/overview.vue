@@ -81,23 +81,6 @@
 			</div>
 		</div>
 		<div class="right">
-			<div v-if="stats" class="container federationStats">
-				<div class="title">Federation</div>
-				<div class="body">
-					<div class="number _panel">
-						<div class="label">Sub</div>
-						<div class="value _monospace">
-							{{ number(federationSubActive) }}
-						</div>
-					</div>
-					<div class="number _panel">
-						<div class="label">Pub</div>
-						<div class="value _monospace">
-							{{ number(federationPubActive) }}
-						</div>
-					</div>
-				</div>
-			</div>
 			<div v-if="topSubInstancesForPie && topPubInstancesForPie" class="container federationPies">
 				<div class="body">
 					<div class="chart deliver">
@@ -180,8 +163,6 @@ let onlineUsersCount = $ref();
 let serverInfo: any = $ref(null);
 let topSubInstancesForPie: any = $ref(null);
 let topPubInstancesForPie: any = $ref(null);
-let federationPubActive = $ref<number | null>(null);
-let federationSubActive = $ref<number | null>(null);
 let newUsers = $ref(null);
 let activeInstances = $shallowRef(null);
 const queueStatsConnection = markRaw(stream.useChannel('queueStats'));
