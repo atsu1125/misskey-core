@@ -68,6 +68,7 @@ import { PasswordResetRequest } from '@/models/entities/password-reset-request.j
 import { UserPending } from '@/models/entities/user-pending.js';
 import { Webhook } from '@/models/entities/webhook.js';
 import { UserIp } from '@/models/entities/user-ip.js';
+import { AbuseReportResolver } from '@/models/entities/abuse-report-resolver.js';
 
 import { envOption } from '../env.js';
 import { dbLogger } from './logger.js';
@@ -170,6 +171,7 @@ export const entities = [
 	UserPending,
 	Webhook,
 	UserIp,
+	AbuseReportResolver,
 ];
 
 const log = process.env.NODE_ENV !== 'production';

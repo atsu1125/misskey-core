@@ -315,6 +315,14 @@ export const meta = {
 				type: 'boolean',
 				optional: true, nullable: false,
 			},
+			doNotSendNotificationEmailsForAbuseReport: {
+				type: 'boolean',
+				optional: false, nullable: false,
+			},
+			emailToReceiveAbuseReport: {
+				type: 'string',
+				optional: false, nullable: true,
+			},
 		},
 	},
 } as const;
@@ -409,5 +417,7 @@ export default define(meta, paramDef, async (ps, me) => {
 		deeplIsPro: instance.deeplIsPro,
 		enableIpLogging: instance.enableIpLogging,
 		enableActiveEmailValidation: instance.enableActiveEmailValidation,
+		doNotSendNotificationEmailsForAbuseReport: instance.doNotSendNotificationEmailsForAbuseReport,
+		emailToReceiveAbuseReport: instance.emailToReceiveAbuseReport,
 	};
 });
