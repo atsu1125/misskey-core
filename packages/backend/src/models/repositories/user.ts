@@ -260,6 +260,7 @@ export const UserRepository = db.getRepository(User).extend({
 
 		const meId = me ? me.id : null;
 		const isMe = meId === user.id;
+		const iAmModerator = me ? (me.isAdmin || me.isModerator) : false;
 
 		const relation = meId && !isMe && opts.detail ? await this.getRelation(meId, user.id) : null;
 		const pins = opts.detail ? await UserNotePinings.createQueryBuilder('pin')
@@ -336,6 +337,11 @@ export const UserRepository = db.getRepository(User).extend({
 				pinnedPage: profile!.pinnedPageId ? Pages.pack(profile!.pinnedPageId, me) : null,
 				publicReactions: profile!.publicReactions,
 				ffVisibility: profile!.ffVisibility,
+				movedToUserId: user.movedToUserId || null,
+				movedToUser: user.movedToUserId ? Users.pack(user.movedToUserId, null, { detail: true }) : null,
+			} : {}),
+
+			...(opts.detail && (isMe || iAmModerator) ? {
 				twoFactorEnabled: profile!.twoFactorEnabled,
 				usePasswordLessLogin: profile!.usePasswordLessLogin,
 				securityKeys: profile!.twoFactorEnabled
@@ -343,8 +349,6 @@ export const UserRepository = db.getRepository(User).extend({
 						userId: user.id,
 					}).then(result => result >= 1)
 					: false,
-				movedToUserId: user.movedToUserId || null,
-				movedToUser: user.movedToUserId ? Users.pack(user.movedToUserId, null, { detail: true }) : null,
 			} : {}),
 
 			...(opts.detail && isMe ? {
