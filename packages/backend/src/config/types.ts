@@ -67,6 +67,7 @@ export type Source = {
 	signToActivityPubGet?: boolean;
 
 	disableSearch?: boolean;
+	disableUrlPreview?: boolean;
 };
 
 /**
