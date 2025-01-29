@@ -23,6 +23,7 @@ import { driveLogger } from './logger.js';
 import { GenerateVideoThumbnail } from './generate-video-thumbnail.js';
 import { deleteFile } from './delete-file.js';
 import { correctFilename } from '@/misc/correct-filename.js';
+import config from '@/config/index.js';
 
 const logger = driveLogger.createSubLogger('register', 'yellow');
 
@@ -40,7 +41,8 @@ async function save(file: DriveFile, path: string, name: string, type: string, h
 
 	const meta = await fetchMeta();
 
-	if (meta.useObjectStorage) {
+	const s3Enabled = (config.enableS3Override && config.s3.enableS3) || (!config.enableS3Override && meta.useObjectStorage);
+	if (s3Enabled) {
 		//#region ObjectStorage params
 		let [ext] = (name.match(/\.([a-zA-Z0-9_-]+)$/) || ['']);
 
@@ -58,11 +60,17 @@ async function save(file: DriveFile, path: string, name: string, type: string, h
 			ext = '';
 		}
 
-		const baseUrl = meta.objectStorageBaseUrl
-			|| `${ meta.objectStorageUseSSL ? 'https' : 'http' }://${ meta.objectStorageEndpoint }${ meta.objectStoragePort ? `:${meta.objectStoragePort}` : '' }/${ meta.objectStorageBucket }`;
+		const s3baseUrl = config.enableS3Override ? (config.s3.baseUrl || null) : (meta.objectStorageBaseUrl || null);
+		const s3useSSL = config.enableS3Override ? config.s3.useSSL : meta.objectStorageUseSSL;
+		const s3endpoint = config.enableS3Override ? (config.s3.endpoint || null) : (meta.objectStorageEndpoint || null);
+		const s3bucket = config.enableS3Override ? config.s3.bucket : meta.objectStorageBucket;
+		const s3prefix = config.enableS3Override ? config.s3.prefix : meta.objectStoragePrefix;
+		const s3port = config.enableS3Override ? null : meta.objectStoragePort;
+		const baseUrl = s3baseUrl
+			|| `${ s3useSSL ? 'https' : 'http' }://${ s3endpoint }${ s3port ? `:${s3port}` : '' }/${ s3bucket }`;
 
 		// for original
-		const key = `${meta.objectStoragePrefix}/${uuid()}${ext}`;
+		const key = `${s3prefix}/${uuid()}${ext}`;
 		const url = `${ baseUrl }/${ key }`;
 
 		// for alts
@@ -263,8 +271,10 @@ async function upload(key: string, stream: fs.ReadStream | Buffer, type: string,
 
 	const meta = await fetchMeta();
 
+	const s3bucket = config.enableS3Override ? config.s3.bucket : meta.objectStorageBucket;
+
 	const params = {
-		Bucket: meta.objectStorageBucket,
+		Bucket: s3bucket,
 		Key: key,
 		Body: stream,
 		ContentType: type,
@@ -277,7 +287,8 @@ async function upload(key: string, stream: fs.ReadStream | Buffer, type: string,
 		// 許可されているファイル形式でしか拡張子をつけない
 		ext ? correctFilename(filename, ext) : filename,
 	);
-	if (meta.objectStorageSetPublicRead) params.ACL = 'public-read';
+	const s3optionssetPublicRead = config.enableS3Override ? config.s3!.options.setPublicRead : meta.objectStorageSetPublicRead;
+	if (s3optionssetPublicRead) params.ACL = 'public-read';
 
 	const s3 = getS3(meta);
 
