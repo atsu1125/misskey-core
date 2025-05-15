@@ -9,6 +9,7 @@ import { generateVisibilityQuery } from '../../common/generate-visibility-query.
 import { generateRepliesQuery } from '../../common/generate-replies-query.js';
 import { generateMutedNoteQuery } from '../../common/generate-muted-note-query.js';
 import { generateBlockedUserQuery } from '../../common/generate-block-query.js';
+import { generateSuspendedUserQueryForNote } from '../../common/generate-suspended-query.js';
 
 export const meta = {
 	tags: ['notes'],
@@ -80,6 +81,7 @@ export default define(meta, paramDef, async (ps, user) => {
 
 	generateRepliesQuery(query, user);
 	generateVisibilityQuery(query, user);
+	generateSuspendedUserQueryForNote(query);
 	if (user) generateMutedUserQuery(query, user);
 	if (user) generateMutedNoteQuery(query, user);
 	if (user) generateBlockedUserQuery(query, user);
