@@ -10,6 +10,7 @@ import { MAX_NOTE_TEXT_LENGTH } from '@/const.js';
 import { noteVisibilities } from '../../../../types.js';
 import { ApiError } from '../../error.js';
 import define from '../../define.js';
+import { getSilencedUsers } from '@/services/create-notification.js';
 
 export const meta = {
 	tags: ['notes'],
@@ -77,7 +78,7 @@ export const meta = {
 			code: 'ACCESS_DENIED',
 			id: 'fe8d7103-0ea8-4ec3-814d-f8b401dc69e9',
 		},
-		
+
 		cannotRenoteDueToVisibility: {
 			message: 'You can not Renote due to target visibility.',
 			code: 'CANNOT_RENOTE_DUE_TO_VISIBILITY',
@@ -201,6 +202,7 @@ export default define(meta, paramDef, async (ps, user) => {
 	}
 
 	let renote: Note | null = null;
+	let requireSilence = false;
 	if (ps.renoteId != null) {
 		// Fetch renote to note
 		renote = await Notes.findOneBy({ id: ps.renoteId });
@@ -229,6 +231,12 @@ export default define(meta, paramDef, async (ps, user) => {
 		} else if (renote.visibility === 'specified') {
 			// specified / direct noteはreject
 			throw new ApiError(meta.errors.cannotRenoteDueToVisibility);
+		}
+
+		// Check Renote of Silenced User Notes
+		const silencedUserSet = await getSilencedUsers();
+		if (ps.visibility === 'public' && silencedUserSet.has(renote.userId)) {
+			requireSilence = true;
 		}
 	}
 
@@ -278,7 +286,7 @@ export default define(meta, paramDef, async (ps, user) => {
 		reply,
 		renote,
 		cw: ps.cw,
-		visibility: ps.visibility,
+		visibility: requireSilence ? 'home' : ps.visibility,
 		visibleUsers,
 		apMentions: ps.noExtractMentions ? [] : undefined,
 		apHashtags: ps.noExtractHashtags ? [] : undefined,
