@@ -106,7 +106,7 @@
 		"syslog-pro": "1.0.0",
 		"systeminformation": "5.22.11",
 		"tinycolor2": "1.4.2",
-		"tmp": "0.2.1",
+		"tmp": "0.2.4",
 		"ts-loader": "9.5.2",
 		"ts-node": "10.9.1",
 		"tsc-alias": "1.7.0",
