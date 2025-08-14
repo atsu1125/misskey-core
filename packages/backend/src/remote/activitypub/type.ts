@@ -168,6 +168,8 @@ export interface IActor extends IObject {
 		sharedInbox?: string;
 	};
 	movedTo?: string | IObject;
+	suspended?: boolean;
+	published?: string;
 }
 
 export const isCollection = (object: IObject): object is ICollection =>
