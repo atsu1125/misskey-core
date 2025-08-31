@@ -1,6 +1,6 @@
 <template>
 <div :class="[$style.root, { yellow: instance.isNotResponding, red: instance.isBlocked, gray: instance.isSuspended }]">
-	<img v-if="instance.iconUrl" class="icon" :src="instance.iconUrl" alt=""/>
+	<img v-if="getInstanceIcon(instance)" class="icon" :src="getInstanceIcon(instance)" alt=""/>
 	<div class="body">
 		<span class="host">{{ instance.name ?? instance.host }}</span>
 		<span class="sub _monospace"><b>{{ instance.host }}</b> / {{ instance.softwareName || '?' }} {{ instance.softwareVersion }}</span>
@@ -12,10 +12,15 @@
 import * as misskey from 'misskey-js';
 import MkMiniChart from '@/components/MkMiniChart.vue';
 import * as os from '@/os';
+import { getProxiedImageUrlNullable } from '@/scripts/media-proxy';
 
 const props = defineProps<{
 	instance: misskey.entities.Instance;
 }>();
+
+function getInstanceIcon(instance): string {
+	return getProxiedImageUrlNullable(instance.iconUrl, 'preview') ?? getProxiedImageUrlNullable(instance.faviconUrl, 'preview') ?? '/client-assets/dummy.png';
+}
 </script>
 
 <style lang="scss" module>
