@@ -12,7 +12,7 @@ import Outbox, { packActivity } from './activitypub/outbox.js';
 import Followers from './activitypub/followers.js';
 import Following from './activitypub/following.js';
 import Featured from './activitypub/featured.js';
-import { inbox as processInbox } from '@/queue/index.js';
+import { inbox as processInbox, inboxLazy as processInboxLazy } from '@/queue/index.js';
 import { isSelfHost } from '@/misc/convert-host.js';
 import { Notes, Users, Emojis, NoteReactions, FollowRequests } from '@/models/index.js';
 import { ILocalUser, User } from '@/models/entities/user.js';
@@ -26,6 +26,7 @@ import * as crypto from 'node:crypto';
 import { inspect } from 'node:util';
 import { IActivity } from '@/remote/activitypub/type.js';
 import { serverLogger } from './index.js';
+import { toSingle } from '@/prelude/array.js';
 
 // Init router
 const router = new Router();
@@ -119,7 +120,19 @@ function inbox(ctx: Router.RouterContext) {
 		return;
 	}
 
-	processInbox(ctx.request.body as IActivity, signature);
+	const activity = ctx.request.body as IActivity;
+
+	let lazy = false;
+
+	if (['Delete', 'Undo'].includes(toSingle(activity.type)!)) {
+		lazy = true;
+	}
+
+	if (lazy) {
+		processInboxLazy(ctx.request.body as IActivity, signature);
+	} else {
+		processInbox(ctx.request.body as IActivity, signature);
+	}
 
 	ctx.status = 202;
 }
