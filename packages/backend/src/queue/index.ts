@@ -178,7 +178,7 @@ export function inboxLazy(activity: IActivity, signature: httpSignature.IParsedS
 	};
 
 	return inboxLazyQueue.add(data, {
-		attempts: 1,
+		attempts: 2,
 		timeout: 1 * 60 * 1000,	// 1min
 		backoff: {
 			type: 'apBackoff',
