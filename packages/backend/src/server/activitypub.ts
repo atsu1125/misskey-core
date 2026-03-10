@@ -24,8 +24,9 @@ import config from '@/config/index.js';
 import Koa from 'koa';
 import * as crypto from 'node:crypto';
 import { inspect } from 'node:util';
-import { IActivity, isDelete, isUndo } from '@/remote/activitypub/type.js';
+import { IActivity } from '@/remote/activitypub/type.js';
 import { serverLogger } from './index.js';
+import { toSingle } from '@/prelude/array.js';
 
 // Init router
 const router = new Router();
@@ -123,7 +124,7 @@ function inbox(ctx: Router.RouterContext) {
 
 	let lazy = false;
 
-	if (isDelete(activity) || isUndo(activity)) {
+	if (['Delete'].includes(toSingle(activity.type)!)) {
 		lazy = true;
 	}
 
