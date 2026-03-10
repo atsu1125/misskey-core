@@ -128,7 +128,7 @@ function inbox(ctx: Router.RouterContext) {
 		lazy = true;
 	}
 
-	if (lazy) {
+	if (lazy && config.enableInboxLazy) {
 		processInboxLazy(ctx.request.body as IActivity, signature);
 	} else {
 		processInbox(ctx.request.body as IActivity, signature);

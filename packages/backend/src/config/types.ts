@@ -85,6 +85,7 @@ export type Source = {
 	disableSearch?: boolean;
 	disableUrlPreview?: boolean;
 	enableS3Override?: boolean;
+	enableInboxLazy?: boolean;
 };
 
 /**
