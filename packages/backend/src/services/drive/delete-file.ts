@@ -109,13 +109,13 @@ export async function deleteFileSync(file: DriveFile, isExpired = false) {
 		await Promise.all(promises);
 	}
 
-	postProcess(file, isExpired);
+	await postProcess(file, isExpired);
 }
 
 async function postProcess(file: DriveFile, isExpired = false) {
 	// リモートファイル期限切れ削除後は直リンクにする
 	if (isExpired && file.userHost !== null && file.uri != null) {
-		DriveFiles.update(file.id, {
+		await DriveFiles.update(file.id, {
 			isLink: true,
 			url: file.uri,
 			thumbnailUrl: null,
@@ -127,7 +127,7 @@ async function postProcess(file: DriveFile, isExpired = false) {
 			webpublicAccessKey: 'webpublic-' + uuid(),
 		});
 	} else {
-		DriveFiles.delete(file.id);
+		await DriveFiles.delete(file.id);
 	}
 }
 
