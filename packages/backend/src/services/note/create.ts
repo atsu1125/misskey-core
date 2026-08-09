@@ -36,6 +36,7 @@ import { Cache } from '@/misc/cache.js';
 import { UserProfile } from '@/models/entities/user-profile.js';
 import { db } from '@/db/postgre.js';
 import { getActiveWebhooks } from '@/misc/webhook-cache.js';
+import { DB_MAX_NOTE_TEXT_LENGTH } from '@/misc/hard-limits.js';
 
 const mutedWordsCache = new Cache<{ userId: UserProfile['userId']; mutedWords: UserProfile['mutedWords']; }[]>(1000 * 60 * 5);
 
@@ -127,6 +128,18 @@ type Option = {
 export default async (user: { id: User['id']; username: User['username']; host: User['host']; isSilenced: User['isSilenced']; createdAt: User['createdAt']; }, data: Option, silent = false) => new Promise<Note>(async (res, rej) => {
 	if (data.createdAt == null) data.createdAt = new Date();
 	if (data.visibility == null) data.visibility = 'public';
+
+	// 本文/CW/投票のハードリミット
+	// サロゲートペアは2文字扱い/合字は複数文字扱いでかける
+	if (data.text && data.text.length > DB_MAX_NOTE_TEXT_LENGTH) {
+		throw new Error('text limit exceeded');
+	}
+	if (data.cw && data.cw.length > DB_MAX_NOTE_TEXT_LENGTH) {
+		throw new Error('cw limit exceeded');
+	}
+	if (data.poll && JSON.stringify(data.poll).length > DB_MAX_NOTE_TEXT_LENGTH) {
+		throw new Error('poll limit exceeded');
+	}
 
 	// サイレンス
 	if (user.isSilenced && data.visibility === 'public') {
