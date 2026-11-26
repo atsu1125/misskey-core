@@ -28,8 +28,7 @@ import { isDuplicateKeyValueError } from '@/misc/is-duplicate-key-value-error.js
 import { checkWordMute } from '@/misc/check-word-mute.js';
 import { countSameRenotes } from '@/misc/count-same-renotes.js';
 import { deliverToRelays } from '../relay.js';
-import { Channel } from '@/models/entities/channel.js';
-import { normalizeForSearch } from '@/misc/normalize-for-search.js';
+import { normalizeTag } from '@/misc/normalize-tag.js';
 import { endedPollNotificationQueue } from '@/queue/queues.js';
 import { webhookDeliver } from '@/queue/index.js';
 import { Cache } from '@/misc/cache.js';
@@ -514,7 +513,7 @@ async function insertNote(user: { id: User['id']; host: User['host']; }, data: O
 		text: data.text,
 		hasPoll: data.poll != null,
 		cw: data.cw == null ? null : data.cw,
-		tags: tags.map(tag => normalizeForSearch(tag)),
+		tags: tags.map(tag => normalizeTag(tag)),
 		emojis,
 		userId: user.id,
 		localOnly: false,
@@ -600,7 +599,7 @@ function index(note: Note) {
 		index: config.elasticsearch.index || 'misskey_note',
 		id: note.id.toString(),
 		body: {
-			text: normalizeForSearch(note.text),
+			text: normalizeTag(note.text),
 			userId: note.userId,
 			userHost: note.userHost,
 		},
